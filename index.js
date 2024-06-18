@@ -20,6 +20,15 @@ app.set('view engine', 'hbs');
 // routes
 app.use('/', require('./routes/indexRouter'));
 
+app.use((req, res, next) => {
+    res.status(404).render("404", { message: "File not found!" });
+})
+
+app.use((error, req, res, next) => {
+    console.error(error);
+    res.status(500).send("Internal Server Error!");
+})
+
 //khoi dong web server
 app.listen(port, () => {
     console.log(`Server is listening at http://localhost:${port}`);
