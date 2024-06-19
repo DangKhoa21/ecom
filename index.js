@@ -21,12 +21,12 @@ app.set('view engine', 'hbs');
 app.use('/', require('./routes/indexRouter'));
 
 app.use((req, res, next) => {
-    res.status(404).render("404", { message: "File not found!" });
+    res.status(404).render("error", { message: "Page Not Found!", error_code: 404 });
 })
 
 app.use((error, req, res, next) => {
     console.error(error);
-    res.status(500).send("Internal Server Error!");
+    res.status(500).render("error", { message: "Internal Server Error!", error_code: 500 });
 })
 
 //khoi dong web server
