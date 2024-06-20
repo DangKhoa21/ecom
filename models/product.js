@@ -28,8 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     summary: DataTypes.TEXT,
     description: DataTypes.TEXT,
     specification: DataTypes.TEXT,
-    stars: DataTypes.FLOAT,
-    quantity: DataTypes.INTEGER
+    stars: DataTypes.FLOAT
   }, {
     sequelize,
     modelName: 'Product',

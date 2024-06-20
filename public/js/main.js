@@ -147,5 +147,12 @@
         button.parent().parent().find('input').val(newVal);
     });
 
+    $('.form-check-input').change(function() {
+        if ($(this).prop('checked')) {
+            $('.form-check-input').not(this).prop('checked', false);
+        }
+    });
+    
+
 })(jQuery);
 
