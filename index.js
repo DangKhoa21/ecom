@@ -14,6 +14,9 @@ app.engine('hbs', expressHandlebars.engine({
     partialsDir: __dirname + '/views/partials',
     extname: 'hbs',
     defaultLayout: 'layout',
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+    }
 }));
 app.set('view engine', 'hbs');
 
@@ -29,7 +32,7 @@ app.use((error, req, res, next) => {
     res.status(500).render("error", { message: "Internal Server Error!", error_code: 500 });
 })
 
-//khoi dong web server
+// launch web server
 app.listen(port, () => {
     console.log(`Server is listening at http://localhost:${port}`);
 });
