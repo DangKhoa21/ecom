@@ -3,7 +3,7 @@
 const controller = {};
 const models = require('../models');
 
-controller.showHomepage = async (req,res) => {
+controller.showHomepage = async (req, res) => {
     const Brand = models.Brand;
     const brands = await Brand.findAll();
     res.render('index', { brands });
