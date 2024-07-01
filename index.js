@@ -21,8 +21,9 @@ app.engine('hbs', expressHandlebars.engine({
 app.set('view engine', 'hbs');
 
 // routes
-app.use('/', require('./routes/indexRouter'));
 app.use('/shop', require('./routes/shopRouter'));
+app.use('/', require('./routes/indexRouter'));
+
 app.use((req, res, next) => {
     res.status(404).render("error", { message: "Page Not Found!", error_code: 404 });
 })

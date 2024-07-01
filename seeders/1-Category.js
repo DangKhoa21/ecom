@@ -4,10 +4,10 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     const items = [
-      { name: 'Online', imagePath: '/img/featur-2.jpg' },
-      { name: 'Offline', imagePath: '/img/featur-2.jpg' },
-      { name: 'Free-to-Play', imagePath: '/img/featur-2.jpg' },
-      { name: 'Paid', imagePath: '/img/featur-2.jpg' }
+      { name: 'Released', imagePath: '/img/featur-2.jpg' },
+      { name: 'Early-Access', imagePath: '/img/featur-2.jpg' },
+      { name: 'Beta', imagePath: '/img/featur-2.jpg' },
+      { name: 'DLC', imagePath: '/img/featur-2.jpg' }
     ];
     items.forEach(item => {
       item.createdAt = Sequelize.literal('NOW()');
