@@ -4,6 +4,12 @@ const controller = {};
 const models = require('../models');
 
 controller.showHomepage = async (req, res) => {
+    // Get Product data
+    const Product = models.Product
+    const products = await Product.findAll();
+    res.locals.products = products;
+
+    // Get Category data
     const Category = models.Category;
     const categories = await Category.findAll();
     const secondArray = categories.splice(2, 2);
@@ -14,6 +20,7 @@ controller.showHomepage = async (req, res) => {
         thirdArray,
     ];
 
+    // Get Brand data
     const Brand = models.Brand;
     const brands = await Brand.findAll();
     res.render('index', { brands });

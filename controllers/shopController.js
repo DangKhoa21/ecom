@@ -8,6 +8,7 @@ controller.show = async (req, res) => {
         attributes: ['id', 'name', 'imagePath', 'oldPrice', 'price', 'stars']
     });
     res.locals.games = product;
+    
     let categories = await models.Category.findAll();
     let secondArray = categories.splice(2, 2);
     let thirdArray = categories.splice(1, 1);
