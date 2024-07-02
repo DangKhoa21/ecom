@@ -4,11 +4,11 @@ let controller = {};
 const models = require('../models');
 
 controller.show = async (req, res) => {
-    let product = await models.Product.findAll({
-        attributes: ['id', 'name', 'imagePath', 'oldPrice', 'price', 'stars']
+    let products = await models.Product.findAll({
+        attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary']
     });
-    res.locals.games = product;
-    
+    res.locals.games = products;
+
     let categories = await models.Category.findAll();
     let secondArray = categories.splice(2, 2);
     let thirdArray = categories.splice(1, 1);

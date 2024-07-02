@@ -6,8 +6,12 @@ const models = require('../models');
 controller.showHomepage = async (req, res) => {
     // Get Product data
     const Product = models.Product
-    const products = await Product.findAll();
-    res.locals.products = products;
+    const featuredProducts = await Product.findAll({
+        attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
+        order: [['stars', 'DESC']],
+        limit: 8,
+    });
+    res.locals.featuredProducts = featuredProducts;
 
     // Get Category data
     const Category = models.Category;
