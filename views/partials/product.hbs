@@ -1,15 +1,21 @@
-<div class="rounded position-relative fruite-item">
+<div class="d-flex flex-column rounded position-relative fruite-item border border-secondary border-top-0 rounded-bottom">
     <div class="fruite-img">
         <img src="{{imagePath}}" class="img-fluid w-100 rounded-top" alt="{{name}}">
     </div>
     <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+    <div class="p-4">
         <h4>{{name}}</h4>
         <p>{{summary}}</p>
-        <div class="d-flex justify-content-between flex-lg-wrap">
-            <p class="text-dark fs-5 fw-bold mb-0">${{price}}</p>
-            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+    </div>    
+    <div class="p-4 pt-0 mt-auto">
+        <div class="d-flex justify-content-around flex-lg-wrap mb-4">    
+            <p class="text-dark fs-3 fw-bold mb-0">${{price}}</p>
+            <p class="text-muted fs-5 fw-bold mb-0 text-decoration-line-through">${{oldPrice}}</p>
+        </div>
+        <div class="d-flex justify-content-end flex-lg-wrap">
+            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+            </a>
         </div>
     </div>
 </div>
