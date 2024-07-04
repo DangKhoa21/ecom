@@ -3,20 +3,32 @@
 let controller = {};
 const models = require('../models');
 
-controller.show = async (req, res) => {
-    let products = await models.Product.findAll({
-        attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary']
+controller.show = async (req, res) => {  
+    const Product = models.Product;
+    const Category = models.Category;
+
+    // Get Category data
+    const categories = await Category.findAll({
+        include: [{
+            model: Product
+        }]
     });
+    res.locals.categories = categories;
+    
+    let category = isNaN(req.query.category) ? 0 : parseInt(req.query.category);
+
+    let options = {
+        attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
+        where: {}
+    };
+    if (category > 0) {
+        options.where.categoryId = category
+    }
+
+    // Get Product data
+    let products = await Product.findAll(options);
     res.locals.games = products;
 
-    let categories = await models.Category.findAll();
-    let secondArray = categories.splice(2, 2);
-    let thirdArray = categories.splice(1, 1);
-    res.locals.categoryArray = [
-        categories,
-        secondArray,
-        thirdArray,
-    ];
     res.render('shop');
 }
 module.exports = controller;
