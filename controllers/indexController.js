@@ -29,14 +29,15 @@ controller.showHomepage = async (req, res) => {
 
     // Get Category data
     const Category = models.Category;
-    const categories = await Category.findAll();
-    const secondArray = categories.splice(2, 2);
-    const thirdArray = categories.splice(1, 1);
-    res.locals.categoryArray = [
-        categories,
-        secondArray,
-        thirdArray,
-    ];
+    const categories = await Category.findAll({
+        include: [{
+            model: Product,
+            attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
+            limit: 8,
+        }],
+        limit: 4,
+    });
+    res.locals.categories = categories;
 
     // Get Brand data
     const Brand = models.Brand;
