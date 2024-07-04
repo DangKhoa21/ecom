@@ -1,0 +1,20 @@
+<div class="p-4 rounded bg-light" style="height: 230px;">
+    <div class="row">
+        <div class="col-6 align-self-center">
+            <img src="{{imagePath}}" class="img-fluid rounded-circle" style="height: 150px; width: 150px; object-fit: cover" alt="{{name}}">
+        </div>
+        <div class="col-6 d-flex flex-column" style="height: 190px;">
+            <a href="#" class="h5">{{name}}</a>
+            <div class="mt-auto">
+                {{{ createStarList stars }}}
+                <div class="d-flex justify-content-around">
+                    <h4 class="mb-3">{{price}} $</h4>
+                    <h5 class="mb-3 text-decoration-line-through text-muted">{{oldPrice}} $</h4>
+                </div>
+                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                    <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
