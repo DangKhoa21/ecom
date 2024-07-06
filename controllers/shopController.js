@@ -47,7 +47,7 @@ controller.show = async (req, res) => {
     let brand = isNaN(req.query.brand) ? 0 : parseInt(req.query.brand);
     let tag = isNaN(req.query.tag) ? 0 : parseInt(req.query.tag);
     let keyword = req.query.keyword || '';
-    res.locals.keyword = keyword;
+    let sort = ['price', 'newest', 'popularity'].includes(req.query.sort) ? req.query.sort : 'nothing';
 
     let options = {
         attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
@@ -61,14 +61,32 @@ controller.show = async (req, res) => {
     }
     if (tag > 0) {
         options.include = [{
-            model: Tag,
+            model: models.Tag,
             where: { id: tag }
         }]
     }
+
     if (keyword.trim() !== '') {
         options.where.name = {
             [Op.iLike]: `%${keyword}%`
         }
+    }
+    res.locals.keyword = keyword;
+
+    switch (sort) {
+        case 'newest':
+            options.order = [['createdAt', 'DESC']];
+            break;
+        case 'popularity':
+            options.order = [['stars', 'DESC']];
+            break;
+        default:
+            options.order = [['price', 'ASC']];
+    }
+    res.locals.sort = sort;
+    res.locals.originalUrl = removeParam('sort', req.originalUrl);
+    if (Object.keys(req.query).length == 0) {
+        res.locals.originalUrl = res.locals.originalUrl + '?';
     }
 
     // Get Product data
@@ -99,6 +117,24 @@ controller.showDetails = async (req, res) => {
     res.locals.product = product;
 
     res.render('shop-detail');
+}
+
+function removeParam(key, sourceURL) {
+    var rtn = sourceURL.split("?")[0],
+        param,
+        params_arr = [],
+        queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
+    if (queryString !== "") {
+        params_arr = queryString.split("&");
+        for (var i = params_arr.length - 1; i >= 0; i -= 1) {
+            param = params_arr[i].split("=")[0];
+            if (param === key) {
+                params_arr.splice(i, 1);
+            }
+        }
+        if (params_arr.length) rtn = rtn + "?" + params_arr.join("&");
+    }
+    return rtn;
 }
 
 module.exports = controller;
