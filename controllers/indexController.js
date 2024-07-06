@@ -4,15 +4,18 @@ const controller = {};
 const models = require('../models');
 
 controller.showHomepage = async (req, res) => {
-    // Get Product data
+    // Get data model
     const Product = models.Product
+    const Category = models.Category;
 
+    // Get all products
     const allProducts = await Product.findAll({
         attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
         limit: 8,
     });
     res.locals.allProducts = allProducts;
 
+    // Get feature products
     const featuredProducts = await Product.findAll({
         attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
         order: [['stars', 'DESC']],
@@ -20,6 +23,7 @@ controller.showHomepage = async (req, res) => {
     });
     res.locals.featuredProducts = featuredProducts;
 
+    // Get recent products
     const recentProducts = await Product.findAll({
         attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
         order: [['createdAt', 'DESC']],
@@ -28,7 +32,6 @@ controller.showHomepage = async (req, res) => {
     res.locals.recentProducts = recentProducts;
 
     // Get Category data
-    const Category = models.Category;
     const categories = await Category.findAll({
         include: [{
             model: Product,
@@ -42,7 +45,9 @@ controller.showHomepage = async (req, res) => {
     // Get Brand data
     const Brand = models.Brand;
     const brands = await Brand.findAll();
-    res.render('index', { brands });
+    res.locals.brands = brands;
+
+    res.render('index');
 }
 
 controller.showPage = (req, res, next) => {

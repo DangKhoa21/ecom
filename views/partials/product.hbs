@@ -1,6 +1,9 @@
-<div class="d-flex flex-column rounded position-relative fruite-item border border-secondary border-top-0 rounded-bottom">
+<div
+    class="d-flex flex-column rounded position-relative fruite-item border border-secondary border-top-0 rounded-bottom">
     <div class="fruite-img">
-        <img src="{{imagePath}}" class="img-fluid w-100 rounded-top" alt="{{name}}">
+        <a href="/shop/{{ id }}">
+            <img src="{{imagePath}}" class="img-fluid w-100 rounded-top" alt="{{name}}">
+        </a>
     </div>
     <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
         <div class="d-flex align-items-center">
@@ -8,13 +11,17 @@
         </div>
     </div>
     <div class="p-4">
-        <h4>{{name}}</h4>
-        <p>{{summary}}</p>
-    </div>    
+        <a href="/shop/{{ id }}">
+            <h4>{{name}}</h4>
+            <p>{{summary}}</p>
+        </a>
+    </div>
     <div class="p-4 pt-0 mt-auto">
-        <div class="d-flex justify-content-around flex-lg-wrap mb-4">    
-            <p class="text-dark fs-3 fw-bold mb-0">${{price}}</p>
-            <p class="text-muted fs-5 fw-bold mb-0 text-decoration-line-through">${{oldPrice}}</p>
+        <div class="d-flex justify-content-around flex-lg-wrap mb-4">
+            <a href="/shop/{{ id }}">
+                <p class="text-dark fs-3 fw-bold mb-0">${{price}}</p>
+                <p class="text-muted fs-5 fw-bold mb-0 text-decoration-line-through">${{oldPrice}}</p>
+            </a>
         </div>
         <div class="d-flex justify-content-end flex-lg-wrap">
             <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
