@@ -139,6 +139,27 @@
         }
     });
 
+    // image carousel
+    $(".image-carousel").owlCarousel({
+        autoplay: false,
+        smartSpeed: 1500,
+        center: false,
+        dots: true,
+        loop: true,
+        margin: 25,
+        nav : true,
+        navText : [
+            '<i class="bi bi-arrow-left"></i>',
+            '<i class="bi bi-arrow-right"></i>'
+        ],
+        responsiveClass: true,
+        responsive: {
+            0:{
+                items:1
+            }
+        }
+    });
+
     // Modal Video
     $(document).ready(function () {
         var $videoSrc;

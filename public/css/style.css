@@ -462,6 +462,43 @@
 
 /*** testimonial End ***/
 
+/*** image Start ***/
+.image .owl-nav .owl-next {
+    position: absolute;
+    top: 145px;
+    right: 5px;
+    color: var(--bs-primary);
+    padding: 10px;
+    border-radius: 10px;
+    transition: 0.5s;
+    opacity: 0;
+}
+
+.image .owl-nav .owl-next:hover {
+    background: var(--bs-secondary);
+    color: var(--bs-white);
+    opacity: 1;
+}
+
+.image .owl-nav .owl-prev {
+    position: absolute;
+    top: 145px;
+    left: 5px;
+    color: var(--bs-primary);
+    padding: 10px;
+    border-radius: 10px;
+    transition: 0.5s;
+    opacity: 0;
+}
+
+.image .owl-nav .owl-prev:hover {
+    background: var(--bs-secondary);
+    color: var(--bs-white);
+    opacity: 1;
+}
+
+/*** image End ***/
+
 
 /*** Single Page Start ***/
 .pagination {
