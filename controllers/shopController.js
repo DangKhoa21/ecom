@@ -112,6 +112,9 @@ controller.showDetails = async (req, res) => {
                 model: models.User,
                 attributes: ['firstName', 'lastName']
             }]
+        }, {
+            model: models.Tag,
+            attributes: ['id', 'name']
         }]
     });
     res.locals.product = product;

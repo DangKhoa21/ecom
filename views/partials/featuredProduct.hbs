@@ -1,10 +1,12 @@
 <div class="p-4 rounded bg-light" style="height: 230px;">
     <div class="row">
         <div class="col-6 align-self-center">
-            <img src="{{imagePath}}" class="img-fluid rounded-circle" style="height: 150px; width: 150px; object-fit: cover" alt="{{name}}">
+            <a href="/shop/{{ id }}">
+                <img src="{{imagePath}}" class="img-fluid rounded-circle" style="height: 150px; width: 150px; object-fit: cover" alt="{{name}}">
+            </a>
         </div>
         <div class="col-6 d-flex flex-column" style="height: 190px;">
-            <a href="#" class="h5">{{name}}</a>
+            <a href="/shop/{{ id }}" class="h5">{{name}}</a>
             <div class="mt-auto">
                 {{{ createStarList stars }}}
                 <div class="d-flex justify-content-around">

@@ -13,15 +13,13 @@
     <div class="p-4">
         <a href="/shop/{{ id }}">
             <h4>{{name}}</h4>
-            <p>{{summary}}</p>
         </a>
+        <p>{{summary}}</p>
     </div>
     <div class="p-4 pt-0 mt-auto">
         <div class="d-flex justify-content-around flex-lg-wrap mb-4">
-            <a href="/shop/{{ id }}">
-                <p class="text-dark fs-3 fw-bold mb-0">${{price}}</p>
-                <p class="text-muted fs-5 fw-bold mb-0 text-decoration-line-through">${{oldPrice}}</p>
-            </a>
+            <p class="text-dark fs-3 fw-bold mb-0">${{price}}</p>
+            <p class="text-muted fs-5 fw-bold mb-0 text-decoration-line-through">${{oldPrice}}</p>
         </div>
         <div class="d-flex justify-content-end flex-lg-wrap">
             <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">

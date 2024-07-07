@@ -54,8 +54,8 @@
         margin: 25,
         nav : true,
         navText : [
-            '<i class="bi bi-arrow-right"></i>',
-            '<i class="bi bi-arrow-left"></i>'
+            '<i class="bi bi-arrow-left"></i>',
+            '<i class="bi bi-arrow-right"></i>'
         ],
         responsiveClass: true,
         responsive: {
@@ -88,8 +88,8 @@
         margin: 25,
         nav : true,
         navText : [
-            '<i class="bi bi-arrow-right"></i>',
-            '<i class="bi bi-arrow-left"></i>'
+            '<i class="bi bi-arrow-left"></i>',
+            '<i class="bi bi-arrow-right"></i>'
         ],
         responsiveClass: true,
         responsive: {
@@ -111,6 +111,7 @@
         }
     });
 
+    // brand carousel
     $(".brand-carousel").owlCarousel({
         autoplay: true,
         smartSpeed: 2000,

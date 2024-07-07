@@ -358,7 +358,7 @@
     position: relative;
 }
 
-.vesitable .owl-nav .owl-prev {
+.vesitable .owl-nav .owl-next {
     position: absolute;
     top: -8px;
     right: 0;
@@ -375,7 +375,7 @@
     color: var(--bs-white);
 }
 
-.vesitable .owl-nav .owl-next {
+.vesitable .owl-nav .owl-prev {
     position: absolute;
     top: -8px;
     right: 88px;
@@ -428,7 +428,7 @@
 
 
 /*** testimonial Start ***/
-.testimonial .owl-nav .owl-prev {
+.testimonial .owl-nav .owl-next {
     position: absolute;
     top: -58px;
     right: 0;
@@ -444,7 +444,7 @@
     color: var(--bs-white);
 }
 
-.testimonial .owl-nav .owl-next {
+.testimonial .owl-nav .owl-prev {
     position: absolute;
     top: -58px;
     right: 88px;

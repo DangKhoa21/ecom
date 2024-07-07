@@ -32,14 +32,17 @@
                     </div>
                     <div class="col-lg-6">
                         <h4 class="fw-bold mb-3">{{ name }}</h4>
-                        <p class="mb-3">Category: Vegetables</p>
+                        <div class="mb-4">
+                            {{#each Tags}}
+                            <a class="btn-link btn-light rounded p-1 px-2 m-1" href='/shop?tag={{id}}'>{{name}}</a>
+                            {{/each}}
+                        </div>
                         <div class="d-flex mb-2 justify-content-around" style="width: 200px;">
-                            <h5 class="fw-bold mb-3">{{ price }} $</h5>
-                            <h5 class="fw-bold mb-3 text-decoration-line-through text-danger">{{ oldPrice }} $</h5>
+                            <h5 class="fw-bold fs-3 mb-3 text-danger">{{ price }} $</h5>
+                            <h5 class="fw-bold fs-5 mb-3 text-decoration-line-through">{{ oldPrice }} $</h5>
                         </div>
                         {{{ createStarList stars }}}
                         <p class="mb-4">{{ summary }}</p>
-                        <p class="mb-4">{{ description }}</p>
                         <a href="#" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 me-2 text-primary"><i
                                 class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                         <a href="#" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 mx-2 text-primary"><i
@@ -53,12 +56,11 @@
                                     aria-controls="nav-about" aria-selected="true">Description</button>
                                 <button class="nav-link border-white border-bottom-0" type="button" role="tab"
                                     id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-mission"
-                                    aria-controls="nav-mission" aria-selected="false">Reviews</button>
+                                    aria-controls="nav-mission" aria-selected="false">Reviews ({{Reviews.length}})</button>
                             </div>
                         </nav>
                         <div class="tab-content mb-5">
                             <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-                                <p>{{ summary }}</p>
                                 <p>{{ description }}</p>
                                 <p>{{ specification }}</p>
                                 {{!-- <div class="px-2">
@@ -206,11 +208,11 @@
             <div class="col-lg-4 col-xl-3">
                 <div class="row g-4 fruite">
                     <div class="col-lg-12">
-                        <div class="input-group w-100 mx-auto d-flex mb-4">
-                            <input type="search" class="form-control p-3" placeholder="keywords"
-                                aria-describedby="search-icon-1">
-                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                        </div>
+                        <form class="input-group w-100 mx-auto d-flex" action="/shop" method="GET">
+                            <input type="search" class="form-control p-3" placeholder="Search" name="keyword" 
+                                value="{{keyword}}" aria-describedby="search-icon-1" required>
+                            <button id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></button>
+                        </form>
                     </div>
                     {{> sidebar}}
                 </div>
