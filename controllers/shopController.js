@@ -48,6 +48,7 @@ controller.show = async (req, res) => {
     let tag = isNaN(req.query.tag) ? 0 : parseInt(req.query.tag);
     let keyword = req.query.keyword || '';
     let sort = ['price', 'newest', 'popularity'].includes(req.query.sort) ? req.query.sort : 'nothing';
+    let page = isNaN(req.query.page) ? 1 : Math.max(1, parseInt(req.query.page));
 
     let options = {
         attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
@@ -89,9 +90,20 @@ controller.show = async (req, res) => {
         res.locals.originalUrl = res.locals.originalUrl + '?';
     }
 
+    const limit = 9;
+    options.limit = limit;
+    options.offset = limit * (page - 1);
+    let { rows, count } = await Product.findAndCountAll(options);
+
     // Get Product data
-    let products = await Product.findAll(options);
-    res.locals.games = products;
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams: req.query
+    }
+    //let products = await Product.findAll(options);
+    res.locals.games = rows;
 
     res.render('shop');
 }
@@ -118,7 +130,20 @@ controller.showDetails = async (req, res) => {
         }]
     });
     res.locals.product = product;
-
+    let tagIds = [];
+    product.Tags.forEach(tag => tagIds.push(tag.id));
+    let relatedProducts = await models.Product.findAll({
+        attributes: ['id', 'name', 'imagePath', 'oldPrice', 'price'],
+        include: [{
+            model: models.Tag,
+            attributes: ['id'],
+            where: {
+                id: { [Op.in]: tagIds }
+            }
+        }],
+        limit: 8
+    });
+    res.locals.relatedProducts = relatedProducts;
     res.render('shop-detail');
 }
 
