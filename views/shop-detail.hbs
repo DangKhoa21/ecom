@@ -63,56 +63,7 @@
                         <div class="tab-content mb-5">
                             <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
                                 <p>{{ description }}</p>
-                                <p>{{ specification }}</p>
-                                {{!-- <div class="px-2">
-                                    <div class="row g-4">
-                                        <div class="col-6">
-                                            <div
-                                                class="row bg-light align-items-center text-center justify-content-center py-2">
-                                                <div class="col-6">
-                                                    <p class="mb-0">Weight</p>
-                                                </div>
-                                                <div class="col-6">
-                                                    <p class="mb-0">1 kg</p>
-                                                </div>
-                                            </div>
-                                            <div class="row text-center align-items-center justify-content-center py-2">
-                                                <div class="col-6">
-                                                    <p class="mb-0">Country of Origin</p>
-                                                </div>
-                                                <div class="col-6">
-                                                    <p class="mb-0">Agro Farm</p>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="row bg-light text-center align-items-center justify-content-center py-2">
-                                                <div class="col-6">
-                                                    <p class="mb-0">Quality</p>
-                                                </div>
-                                                <div class="col-6">
-                                                    <p class="mb-0">Organic</p>
-                                                </div>
-                                            </div>
-                                            <div class="row text-center align-items-center justify-content-center py-2">
-                                                <div class="col-6">
-                                                    <p class="mb-0">Сheck</p>
-                                                </div>
-                                                <div class="col-6">
-                                                    <p class="mb-0">Healthy</p>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="row bg-light text-center align-items-center justify-content-center py-2">
-                                                <div class="col-6">
-                                                    <p class="mb-0">Min Weight</p>
-                                                </div>
-                                                <div class="col-6">
-                                                    <p class="mb-0">250 Kg</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
+                                {{{createSpecTable specification}}}
                             </div>
                             <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
                                 {{#each Reviews}}
@@ -224,7 +175,9 @@
         <div class="vesitable">
             <div class="owl-carousel vegetable-carousel justify-content-center">
                 {{#each relatedProducts}}
-                {{> product}}
+                <div style="height: 500px">
+                    {{> recentProduct}}
+                </div>
                 {{/each}}
             </div>
         </div>
