@@ -19,11 +19,11 @@
                         style="align-items: flex-start;">
                         <a class="nav-link active" id="personal-details-nav" data-toggle="pill"
                             href="#personal-details-tab" role="tab">Personal Details</a>
-                        <a class="nav-link" id="orders-nav" data-toggle="pill" href="#orders-tab" role="tab">Orders</a>
                         <a class="nav-link" id="account-nav" data-toggle="pill" href="#account-tab" role="tab">Account
                             Details</a>
                         <a class="nav-link" id="payment-nav" data-toggle="pill" href="#payment-tab" role="tab">Payment
                             Method</a>
+                        <a class="nav-link" id="orders-nav" data-toggle="pill" href="#orders-tab" role="tab">Orders</a>
                     </div>
                 </div>
                 <div class="col-md-9">
@@ -64,47 +64,6 @@
                             </form>
                         </div>
                         <!-- Personal Details Section End -->
-
-                        <!-- Orders Section Start -->
-                        <div class="tab-pane fade" id="orders-tab" role="tabpanel" aria-labelledby="orders-nav">
-                            <h2 class="text-center mb-4">Orders</h2>
-                            <div class="table-responsive">
-                                <table class="table table-bordered">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Product</th>
-                                            <th>Date</th>
-                                            <th>Price</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- Sample order rows (replace with dynamic data from backend) -->
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Product Name</td>
-                                            <td>01 Jan 2020</td>
-                                            <td>$22</td>
-                                            <td>Approved</td>
-                                            <td><button class="btn btn-primary">View</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Another Product</td>
-                                            <td>15 Feb 2020</td>
-                                            <td>$30</td>
-                                            <td>Delivered</td>
-                                            <td><button class="btn btn-primary">View</button></td>
-                                        </tr>
-                                        <!-- Add more orders dynamically here -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- Orders Section End -->
-
 
                         <!-- Account Details Section Start -->
                         <div class="tab-pane fade" id="account-tab" role="tabpanel" aria-labelledby="account-nav">
@@ -161,6 +120,48 @@
                             </form>
                         </div>
                         <!-- Payment Method Section End -->
+
+                        <!-- Orders Section Start -->
+                        <div class="tab-pane fade" id="orders-tab" role="tabpanel" aria-labelledby="orders-nav">
+                            <h2 class="text-center mb-4">Orders</h2>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Product</th>
+                                            <th>Date</th>
+                                            <th>Price</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Sample order rows (replace with dynamic data from backend) -->
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Product Name</td>
+                                            <td>01 Jan 2020</td>
+                                            <td>$22</td>
+                                            <td>Approved</td>
+                                            <td><button class="btn btn-primary">View</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Another Product</td>
+                                            <td>15 Feb 2020</td>
+                                            <td>$30</td>
+                                            <td>Delivered</td>
+                                            <td><button class="btn btn-primary">View</button></td>
+                                        </tr>
+                                        <!-- Add more orders dynamically here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- Orders Section End -->
+
+
                     </div>
                 </div>
             </div>
