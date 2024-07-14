@@ -41,8 +41,6 @@ controller.getData = async (req, res, next) => {
 controller.show = async (req, res) => {
     const Product = models.Product;
 
-
-
     let category = isNaN(req.query.category) ? 0 : parseInt(req.query.category);
     let brand = isNaN(req.query.brand) ? 0 : parseInt(req.query.brand);
     let tag = isNaN(req.query.tag) ? 0 : parseInt(req.query.tag);
@@ -130,6 +128,7 @@ controller.showDetails = async (req, res) => {
         }]
     });
     res.locals.product = product;
+
     let tagIds = [];
     product.Tags.forEach(tag => tagIds.push(tag.id));
     let relatedProducts = await models.Product.findAll({

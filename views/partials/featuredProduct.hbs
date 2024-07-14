@@ -2,7 +2,8 @@
     <div class="row">
         <div class="col-6 align-self-center">
             <a href="/shop/{{ id }}">
-                <img src="{{imagePath}}" class="img-fluid rounded-circle" style="height: 150px; width: 150px; object-fit: cover" alt="{{name}}">
+                <img src="{{imagePath}}" class="img-fluid rounded-circle"
+                    style="height: 150px; width: 150px; object-fit: cover" alt="{{name}}">
             </a>
         </div>
         <div class="col-6 d-flex flex-column" style="height: 190px;">
@@ -13,7 +14,7 @@
                     <h4 class="mb-3">{{price}} $</h4>
                     <h5 class="mb-3 text-decoration-line-through text-muted">{{oldPrice}} $</h4>
                 </div>
-                <a href="/shop/{{ id }}" class="btn border border-secondary rounded-pill px-3 text-primary">
+                <a onclick="addCart({{ id }}, 1)" class="btn border border-secondary rounded-pill px-3 text-primary">
                     <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
                 </a>
             </div>

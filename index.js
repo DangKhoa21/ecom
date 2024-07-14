@@ -6,6 +6,7 @@ const port = process.env.PORT || 3000;
 const expressHandlebars = require('express-handlebars');
 const { createStarList, createSpecTable } = require('./controllers/handlebarsHelper');
 const { createPagination } = require('express-handlebars-paginate');
+const session = require('express-session');
 
 //config public static folder
 app.use(express.static(__dirname + '/public'));
@@ -26,6 +27,32 @@ app.engine('hbs', expressHandlebars.engine({
     }
 }));
 app.set('view engine', 'hbs');
+
+// configure to read post request
+app.use(express.json());
+app.use(express.urlencoded({
+    extended: false
+}))
+
+// session configure
+app.use(session({
+    secret: 'Group2_S3cret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        maxAge: 20 * 60 * 1000 // 20min
+    }
+}));
+
+// middleware to initialize cart
+app.use((req, res, next) => {
+    let Cart = require('./controllers/cart');
+    req.session.cart = new Cart(req.session.cart ? req.session.cart : {});
+    res.locals.quantity = req.session.cart.quantity;
+
+    next();
+})
 
 // routes
 app.use('/shop', require('./routes/shopRouter'));

@@ -75,7 +75,7 @@
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                <a href="/cart" class="dropdown-item">Cart</a>
+                                <a href="/shop/cart" class="dropdown-item">Cart</a>
                                 <a href="/checkout" class="dropdown-item">Checkout</a>
                                 <a href="/testimonial" class="dropdown-item">Testimonial</a>
                                 <a href="/404" class="dropdown-item">404 Page</a>
@@ -93,11 +93,11 @@
                             class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4"
                             data-bs-toggle="modal" data-bs-target="#searchModal"><i
                                 class="fas fa-search text-primary"></i></button>
-                        <a href="/cart" class="position-relative me-4 my-auto">
+                        <a href="/shop/cart" class="position-relative me-4 my-auto">
                             <i class="fa fa-shopping-bag fa-2x"></i>
-                            <span
+                            <span id="cart-quantity"
                                 class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
-                                style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
+                                style="top: -5px; left: 15px; height: 20px; min-width: 20px;">{{ quantity }}</span>
                         </a>
                         <a href="/login-sign-up" class="my-auto">
                             <i class="fas fa-user fa-2x"></i>
@@ -120,8 +120,8 @@
                 </div>
                 <div class="modal-body d-flex align-items-center">
                     <form class="input-group w-75 mx-auto d-flex" action="/shop" method="GET">
-                        <input class="form-control p-3" type="search"
-                        placeholder="keyword" name="keyword" aria-describedby="search" required>
+                        <input class="form-control p-3" type="search" placeholder="keyword" name="keyword"
+                            aria-describedby="search" required>
                         <button id="search" class="input-group-text p-3"><i class="fa fa-search"></i></button>
                     </form>
                 </div>
@@ -250,6 +250,7 @@
 
     <!-- Template Javascript -->
     <script src="/js/main.js"></script>
+    <script src="/js/mssv.js"></script>
 </body>
 
 </html>
