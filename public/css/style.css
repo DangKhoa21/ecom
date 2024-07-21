@@ -474,7 +474,7 @@
     opacity: 0;
 }
 
-.image .owl-nav .owl-next:hover {
+.image:hover .owl-nav .owl-next {
     background: var(--bs-secondary);
     color: var(--bs-white);
     opacity: 1;
@@ -491,7 +491,7 @@
     opacity: 0;
 }
 
-.image .owl-nav .owl-prev:hover {
+.image:hover .owl-nav .owl-prev {
     background: var(--bs-secondary);
     color: var(--bs-white);
     opacity: 1;

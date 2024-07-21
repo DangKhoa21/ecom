@@ -117,7 +117,8 @@ controller.showDetails = async (req, res) => {
             attributes: ['name', 'imagePath']
         }, {
             model: models.Review,
-            attributes: ['id', 'review', 'stars', 'createdAt'],
+            attributes: ['id', 'review', 'stars', 
+                [sequelize.literal(`to_char("Reviews"."createdAt", 'Mon DD, YYYY HH24:MI')`), 'formattedCreatedAt']],
             include: [{
                 model: models.User,
                 attributes: ['firstName', 'lastName']
@@ -127,6 +128,13 @@ controller.showDetails = async (req, res) => {
             attributes: ['id', 'name']
         }]
     });
+
+    if (product && product.Reviews) {
+        product.Reviews.forEach(review => {
+          review.formattedCreatedAt = review.dataValues.formattedCreatedAt;
+        });
+    }
+
     res.locals.product = product;
 
     let tagIds = [];
