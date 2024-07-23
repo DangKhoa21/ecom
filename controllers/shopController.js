@@ -108,6 +108,9 @@ controller.show = async (req, res) => {
 
 controller.showDetails = async (req, res) => {
     const id = isNaN(req.params.id) ? 0 : parseInt(req.params.id);
+    if (id == 0) {
+        return res.render('error', { message: "Product Not Found!", error_code: 404 });
+    }
 
     const product = await models.Product.findOne({
         attributes: ['id', 'name', 'stars', 'oldPrice', 'price', 'summary', 'description', 'specification'],
@@ -129,7 +132,11 @@ controller.showDetails = async (req, res) => {
         }]
     });
 
-    if (product && product.Reviews) {
+    if (!product) {
+        return res.render('error', { message: "Product Not Found!", error_code: 404 });
+    }
+
+    if (product.Reviews) {
         product.Reviews.forEach(review => {
           review.formattedCreatedAt = review.dataValues.formattedCreatedAt;
         });
