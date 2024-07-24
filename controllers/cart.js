@@ -3,12 +3,12 @@
 class Cart {
     constructor(oldCart) {
         this.items = oldCart.items || {};
-        this.shipping = oldCart.shipping || 0;
+        // this.shipping = oldCart.shipping || 0;
         this.discount = oldCart.discount || 0;
 
         this.couponCode = oldCart.couponCode || '';
         this.paymentMethod = oldCart.paymentMethod || 'COD';
-        this.shippingAddress = oldCart.shippingAddress || '';
+        // this.shippingAddress = oldCart.shippingAddress || '';
     }
 
     get quantity() {
@@ -28,7 +28,7 @@ class Cart {
     }
 
     get total() {
-        let price = parseFloat(this.subtotal) + parseFloat(this.shipping) - parseFloat(this.discount);
+        let price = parseFloat(this.subtotal) + /*parseFloat(this.shipping)*/ - parseFloat(this.discount);
         return parseFloat(price).toFixed(2);
     }
 
@@ -64,7 +64,7 @@ class Cart {
     clear() {
         this.items = {};
         this.discount = 0;
-        this.shipping = 0;
+        // this.shipping = 0;
         this.couponCode = '';
     };
 
@@ -84,11 +84,11 @@ class Cart {
             quantity: this.quantity,
             subtotal: this.subtotal,
             total: this.total,
-            shipping: parseFloat(this.shipping).toFixed(2),
+            // shipping: parseFloat(this.shipping).toFixed(2),
             discount: parseFloat(this.discount).toFixed(2),
             couponCode: this.couponCode,
             paymentMethod: this.paymentMethod,
-            shippingAddress: this.shippingAddress
+            // shippingAddress: this.shippingAddress
         }
     }
 }

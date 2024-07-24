@@ -13,81 +13,61 @@
 <!-- Checkout Page Start -->
 <div class="container-fluid py-5">
     <div class="container py-5">
-        <h1 class="mb-4">Billing details</h1>
-        <form action="#">
+        <form action="/users/placeorders" method="post">
             <div class="row g-5">
                 <div class="col-md-12 col-lg-7 col-xl-7">
+                    <h1 class="mb-4">Billing details</h1>
                     <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
                         <div class="col-12">
                             <div class="form-check text-start my-3">
-                                <input type="checkbox" class="form-check-input bg-primary border-0" id="Transfer-1" name="Transfer" value="Transfer">
+                                <input type="checkbox" class="form-check-input bg-primary border-0" id="Transfer-1" name="payment" value="DBT">
                                 <label class="form-check-label" for="Transfer-1">Direct Bank Transfer</label>
                             </div>
-                            <p class="text-start text-dark">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
+                            <p class="text-start text-dark">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be completed until the funds have cleared in our account.</p>
                         </div>
                     </div>
                     <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
                         <div class="col-12">
                             <div class="form-check text-start my-3">
-                                <input type="checkbox" class="form-check-input bg-primary border-0" id="Payments-1" name="Payments" value="Payments">
-                                <label class="form-check-label" for="Payments-1">Check Payments</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
-                        <div class="col-12">
-                            <div class="form-check text-start my-3">
-                                <input type="checkbox" class="form-check-input bg-primary border-0" id="Delivery-1" name="Delivery" value="Delivery">
-                                <label class="form-check-label" for="Delivery-1">Cash On Delivery</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
-                        <div class="col-12">
-                            <div class="form-check text-start my-3">
-                                <input type="checkbox" class="form-check-input bg-primary border-0" id="Paypal-1" name="Paypal" value="Paypal">
+                                <input type="checkbox" class="form-check-input bg-primary border-0" id="Paypal-1" name="payment" value="PAYPAL">
                                 <label class="form-check-label" for="Paypal-1">Paypal</label>
                             </div>
                         </div>
                     </div>
                     <div class="row g-4 text-center align-items-center justify-content-end pt-4">
                         <div class="col-4">
-                            <button type="button" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place Order</button>
+                            <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place Order</button>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-5 col-xl-5">
+                    {{#with cart}}
                     <div class="">
                         <div class="bg-light rounded">
                             <div class="p-4">
                                 <h1 class="display-6 mb-4">Order <span class="fw-normal">Summary</span></h1>
-                                <div class="d-flex justify-content-between mb-4">
-                                    <h5 class="mb-0 me-4">Big Banana</h5>
-                                    <p class="mb-0">$2.99</p>
+                                {{#each items}}
+                                <div class="d-flex justify-content-between {{#unless @last}}mb-4{{/unless}}">
+                                    <h5 class="mb-0 me-4">{{product.name}}</h5>
+                                    <p class="mb-0">${{product.price}}</p>
                                 </div>
-                                <div class="d-flex justify-content-between mb-4">
-                                    <h5 class="mb-0 me-4">Potatoes</h5>
-                                    <div class="">
-                                        <p class="mb-0">$2.99</p>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-between">
-                                    <h5 class="mb-0 me-4">Awesome Brocoli</h5>
-                                    <div class="">
-                                        <p class="mb-0">$2.99</p>
-                                    </div>
-                                </div>
+                                {{/each}}
                             </div>
                             <div class="py-4 border-top d-flex justify-content-between">
+                                <h5 class="mb-0 ps-4 me-4">Sutotal</h5>
+                                <p class="mb-0 pe-4">${{subtotal}}</p>
+                            </div>
+                            <div class="pb-4 d-flex justify-content-between">
                                 <h5 class="mb-0 ps-4 me-4">Discount</h5>
-                                <p class="mb-0 pe-4">$0.00</p>
+                                <p class="mb-0 pe-4">${{discount}}</p>
                             </div>
                             <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                                 <h4 class="mb-0 ps-4 me-4">Total</h4>
-                                <h4 class="mb-0 pe-4">$99.00</h4>
+                                <h4 class="mb-0 pe-4">${{total}}</h4>
                             </div>
                         </div>
                     </div>
+                    {{/with}}
                 </div>
             </div>
         </form>
