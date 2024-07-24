@@ -1,35 +1,32 @@
 {
-    "development": {
-      "username": "ecom_db",
-      "password": "IgKNraNFtfXUGHB11sFu7vV244pExE46",
-      "database": "ecom_db_3zit",
-      "host": "dpg-cq6cnsiju9rs73e4nl60-a.oregon-postgres.render.com",
-      "dialect": "postgres",
-      "dialectOptions": {
-        "ssl": {
-          "require": true,
-          "rejectUnauthorized": false
-        }
+  "development": {
+    "username": "ecom_db",
+    "password": "IgKNraNFtfXUGHB11sFu7vV244pExE46",
+    "database": "ecom_db_3zit",
+    "host": "dpg-cq6cnsiju9rs73e4nl60-a.oregon-postgres.render.com",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
       }
-    },
-    "test": {
-      "username": "root",
-      "password": null,
-      "database": "database_test",
-      "host": "127.0.0.1",
-      "dialect": "postgres"
-    },
-    "production": {
-      "username": "ecom_db",
-      "password": "IgKNraNFtfXUGHB11sFu7vV244pExE46",
-      "database": "ecom_db_3zit",
-      "host": "dpg-cq6cnsiju9rs73e4nl60-a.oregon-postgres.render.com",
-      "dialect": "postgres",
-      "dialectOptions": {
-        "ssl": {
-          "require": true,
-          "rejectUnauthorized": false
-        }
+    }
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "use_env_variable": "POSTGRESQL_URL",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
       }
     }
   }
+}

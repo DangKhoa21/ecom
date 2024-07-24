@@ -1,5 +1,5 @@
 'use strict';
-
+require('dotenv').config()
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
@@ -7,6 +7,13 @@ const expressHandlebars = require('express-handlebars');
 const { createStarList, createSpecTable } = require('./controllers/handlebarsHelper');
 const { createPagination } = require('express-handlebars-paginate');
 const session = require('express-session');
+const redisStore = require('connect-redis').default;
+const { createClient } = require('redis');
+
+const redisClient = createClient({    
+    url: process.env.REDIS_URL
+});
+redisClient.connect().catch(console.error);
 
 //config public static folder
 app.use(express.static(__dirname + '/public'));
@@ -36,7 +43,8 @@ app.use(express.urlencoded({
 
 // session configure
 app.use(session({
-    secret: 'Group2_S3cret',
+    secret: process.env.SESSION_SECRET || 'Group2_S3cret',
+    store: new redisStore({ client: redisClient }),
     resave: false,
     saveUninitialized: false,
     cookie: {
