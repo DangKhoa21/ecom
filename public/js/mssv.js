@@ -88,3 +88,14 @@ async function clearCart() {
         }
     }
 }
+
+function addWishlist(id) {
+    fetch('/users/wishlist', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ id })
+    });
+}

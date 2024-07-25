@@ -26,7 +26,7 @@ controller.showHomepage = async (req, res) => {
     // Get recent products
     const recentProducts = await Product.findAll({
         attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
-        order: [['createdAt', 'DESC']],
+        order: [['updatedAt', 'DESC']],
         limit: 8,
     });
     res.locals.recentProducts = recentProducts;

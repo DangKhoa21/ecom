@@ -25,16 +25,19 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {{#each products}}
                         <tr>
                             <td scope="row">
                                 <div class="d-flex align-items-center mt-2">
-                                    <img src="img/vegetable-item-2.jpg" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
+                                    <a href="/shop/{{ id }}">
+                                        <img src={{imagePath}} class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
+                                    </a>
                                 </div>
                             </td>
-                            <td class="py-5">Awesome Broccoli</td>
-                            <td class="py-5">$69.00</td>
+                            <td class="py-5"><a href="/shop/{{ id }}" class="btn-link">{{name}}</a></td>
+                            <td class="py-5">${{price}}</td>
                             <td class="py-5">
-                                <a href="#" class="btn border border-secondary rounded-pill py-2  text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                <a onClick="addCart({{id}}, 1)" class="btn border border-secondary rounded-pill  py-2  text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                             </td>
                             <td class="py-5">
                                 <button class="btn btn-md rounded-circle bg-light border" >
@@ -42,40 +45,7 @@
                                 </button>
                             </td>
                         </tr>
-                        <tr>
-                            <td scope="row">
-                                <div class="d-flex align-items-center mt-2">
-                                    <img src="img/vegetable-item-5.jpg" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
-                                </div>
-                            </td>
-                            <td class="py-5">Potatoes</td>
-                            <td class="py-5">$69.00</td>
-                            <td class="py-5">
-                                <a href="#" class="btn border border-secondary rounded-pill  py-2  text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                            </td>
-                            <td class="py-5">
-                                <button class="btn btn-md rounded-circle bg-light border" >
-                                <i class="fa fa-times text-danger"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">
-                                <div class="d-flex align-items-center mt-2">
-                                    <img src="img/vegetable-item-3.png" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
-                                </div>
-                            </td>
-                            <td class="py-5">Big Banana</td>
-                            <td class="py-5">$69.00</td>
-                            <td class="py-5">
-                                <a href="#" class="btn border border-secondary rounded-pill  py-2  text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                            </td>
-                            <td class="py-5">
-                                <button class="btn btn-md rounded-circle bg-light border" >
-                                <i class="fa fa-times text-danger"></i>
-                                </button>
-                            </td>
-                        </tr>
+                        {{/each}}
                     </tbody>
                 </table>
             </div>
