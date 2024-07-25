@@ -74,7 +74,7 @@ controller.show = async (req, res) => {
 
     switch (sort) {
         case 'newest':
-            options.order = [['createdAt', 'DESC']];
+            options.order = [['updatedAt', 'DESC']];
             break;
         case 'popularity':
             options.order = [['stars', 'DESC']];
@@ -119,9 +119,9 @@ controller.showDetails = async (req, res) => {
             model: models.Image,
             attributes: ['name', 'imagePath']
         }, {
-            model: models.Review,
+            model: models.Review,            
             attributes: ['id', 'review', 'stars', 
-                [sequelize.literal(`to_char("Reviews"."createdAt", 'Mon DD, YYYY HH24:MI')`), 'formattedCreatedAt']],
+                [sequelize.literal(`to_char("Reviews"."updatedAt", 'Mon DD, YYYY HH24:MI')`), 'formattedUpdatedAt']],
             include: [{
                 model: models.User,
                 attributes: ['firstName', 'lastName']
@@ -129,7 +129,8 @@ controller.showDetails = async (req, res) => {
         }, {
             model: models.Tag,
             attributes: ['id', 'name']
-        }]
+        }],
+        order: [[models.Review, 'updatedAt', 'DESC']]
     });
 
     if (!product) {
@@ -138,7 +139,7 @@ controller.showDetails = async (req, res) => {
 
     if (product.Reviews) {
         product.Reviews.forEach(review => {
-          review.formattedCreatedAt = review.dataValues.formattedCreatedAt;
+          review.formattedUpdatedAt = review.dataValues.formattedUpdatedAt;
         });
     }
 
@@ -159,6 +160,25 @@ controller.showDetails = async (req, res) => {
     });
     res.locals.relatedProducts = relatedProducts;
     res.render('shop-detail');
+}
+
+controller.addReview = async (req, res) => {
+    let userId = 2;
+    let productId = isNaN(req.params.id) ? 0 : parseInt(req.params.id);
+    let review = req.body.review;
+    let stars = req.body.stars || 0;
+    let product = await models.Product.findByPk(productId);
+    if (product && review.length > 0) {
+        let reviews = await models.Review.findOne({ where: { userId, productId } });
+        if (reviews) 
+            await reviews.update({ review, stars });    
+        else
+            await models.Review.create({ userId, productId, review, stars });
+
+        res.redirect(`/shop/${productId}`);
+    }
+    else
+        res.redirect(`/shop/${productId}`);
 }
 
 function removeParam(key, sourceURL) {

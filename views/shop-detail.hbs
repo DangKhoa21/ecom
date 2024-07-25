@@ -74,7 +74,7 @@
                                     <div class="w-100 mb-2">                                    
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div>
-                                                <p class="mb-2" style="font-size: 14px;">{{ formattedCreatedAt }}</p>
+                                                <p class="mb-2" style="font-size: 14px;">{{ formattedUpdatedAt }}</p>
                                                 <h5>{{ User.firstName }} {{ User.lastName }}</h5>
                                             </div>
                                             {{{ createStarList stars }}}
@@ -93,44 +93,35 @@
                             </div>
                         </div>
                     </div>
-                    {{/with}}
-                    <form action="#">
-                        <h4 class="mb-5 fw-bold">Leave a Reply</h4>
+                    <form action="/shop/{{id}}/review" method="post">
+                        <h4 class="mb-4 fw-bold">Leave a Review</h4>
                         <div class="row g-4">
-                            <div class="col-lg-6">
-                                <div class="border-bottom rounded">
-                                    <input type="text" class="form-control border-0 me-4" placeholder="Your Name *">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="border-bottom rounded">
-                                    <input type="email" class="form-control border-0" placeholder="Your Email *">
-                                </div>
-                            </div>
                             <div class="col-lg-12">
                                 <div class="border-bottom rounded my-4">
-                                    <textarea name="" id="" class="form-control border-0" cols="30" rows="8"
-                                        placeholder="Your Review *" spellcheck="false"></textarea>
+                                    <textarea name="review" id="" class="form-control border-0" cols="30" rows="8"
+                                        placeholder="Your Review *" spellcheck="false" required></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="d-flex justify-content-between py-3 mb-5">
                                     <div class="d-flex align-items-center">
                                         <p class="mb-0 me-3">Please rate:</p>
-                                        <div class="d-flex align-items-center" style="font-size: 12px;">
-                                            <i class="fa fa-star text-muted"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
+                                        <div class="d-flex align-items-center" style="font-size: 30px;">
+                                            <i class="fa fa-star star"></i>
+                                            <i class="fa fa-star star"></i>
+                                            <i class="fa fa-star star"></i>
+                                            <i class="fa fa-star star"></i>
+                                            <i class="fa fa-star star"></i>
                                         </div>
+                                        <input type="hidden" name="stars" id="stars-input" value="0">
                                     </div>
-                                    <a href="#" class="btn border border-secondary text-primary rounded-pill px-4 py-3">
-                                        Post Comment</a>
+                                    <button type="submit" class="btn border border-secondary text-primary rounded-pill px-5 py-3">
+                                        POST</button>
                                 </div>
                             </div>
                         </div>
                     </form>
+                    {{/with}}
                 </div>
             </div>
             <div class="col-lg-4 col-xl-3">
@@ -160,3 +151,19 @@
     </div>
 </div>
 <!-- Single Product End -->
+
+<script>
+    const stars = document.getElementsByClassName("star");
+    const starsInput = document.getElementById("stars-input");
+    for (let i = 0; i < stars.length; i++) {
+        stars[i].addEventListener("click", function () {
+            for (let j = 0; j < stars.length; j++) {
+                stars[j].classList.remove("text-primary");
+            }
+            for (let j = 0; j <= i; j++) {
+                stars[j].classList.add("text-primary");
+            }
+            starsInput.value = i + 1;
+        });
+    }
+</script>
