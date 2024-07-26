@@ -49,7 +49,7 @@
                                     <p class="mb-0 mt-4">{{ product.price }}</p>
                                 </td>
                                 <td>
-                                    <a href="#"
+                                    <a onclick="addWishlist({{ product.id }})"
                                         class="btn border border-secondary rounded-pill px-4 py-2 mt-3 text-primary"><i
                                             class="fa fa-heart  text-primary"></i> Move</a>
                                 </td>
@@ -79,6 +79,7 @@
 
                 <div class="text-center border py-3 rounded align-content-center">
                     <h3>Your cart is empty!</h3>
+                    <a class="btn border-secondary rounded-pill py-2 px-3 mt-2" href="/shop">Go Back To Shop</a>
                 </div>
 
                 {{/if}}

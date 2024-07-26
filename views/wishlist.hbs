@@ -12,7 +12,8 @@
 <!-- Wishlist Start -->
 <div class="container mt-5">
     <div class="row d-flex justify-content-center">
-        <div class="col-10">
+        <div class="col-10 wishlist-info">
+            {{#if products.length}}
             <div class="table-responsive">
                 <table class="table">
                     <thead>
@@ -26,7 +27,7 @@
                     </thead>
                     <tbody>
                         {{#each products}}
-                        <tr>
+                        <tr id="product{{ id }}">
                             <td scope="row">
                                 <div class="d-flex align-items-center mt-2">
                                     <a href="/shop/{{ id }}">
@@ -37,11 +38,11 @@
                             <td class="py-5"><a href="/shop/{{ id }}" class="btn-link">{{name}}</a></td>
                             <td class="py-5">${{price}}</td>
                             <td class="py-5">
-                                <a onClick="addCart({{id}}, 1)" class="btn border border-secondary rounded-pill  py-2  text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                <a onClick="addCart({{ id }}, 1)" class="btn border border-secondary rounded-pill  py-2  text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                             </td>
                             <td class="py-5">
-                                <button class="btn btn-md rounded-circle bg-light border" >
-                                <i class="fa fa-times text-danger"></i>
+                                <button onClick="removeWishlist({{ id }})" class="btn btn-md rounded-circle bg-light border" >
+                                    <i class="fa fa-times text-danger"></i>
                                 </button>
                             </td>
                         </tr>
@@ -49,6 +50,12 @@
                     </tbody>
                 </table>
             </div>
+            {{else}}
+            <div class="text-center border py-3 rounded align-content-center">
+                <h3>Your wishlist is empty!</h3>
+                <a class="btn border-secondary rounded-pill py-2 px-3 mt-2" href="/shop">Go Back To Shop</a>
+            </div>
+            {{/if}}
         </div>
     </div>
 </div>

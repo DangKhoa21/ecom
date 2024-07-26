@@ -84,6 +84,7 @@ async function clearCart() {
             document.querySelector('.cart-info').innerHTML = 
             `<div class="text-center border py-3 rounded align-content-center">
             <h3>Your cart is empty!</h3>
+            <a class="btn border-secondary rounded-pill py-2 px-3 mt-2" href="/shop">Go Back To Shop</a>
             </div>`;
         }
     }
@@ -98,4 +99,31 @@ function addWishlist(id) {
         },
         body: JSON.stringify({ id })
     });
+}
+
+async function removeWishlist(id) {
+    if (confirm("Do you want to remove this item from your wishlist?")) {
+        let res = await fetch('/users/wishlist', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ id })
+        });
+    
+        if (res.status == 200) {
+            let json = await res.json();
+            if (json.quantity > 0) {  
+                document.getElementById(`product${id}`).remove();
+            }
+            else {
+                document.querySelector('.wishlist-info').innerHTML = 
+                `<div class="text-center border py-3 rounded align-content-center">
+                <h3>Your wishlist is empty!</h3>
+                <a class="btn border-secondary rounded-pill py-2 px-3 mt-2" href="/shop">Go Back To Shop</a>
+                </div>`;
+            }
+        }
+    }
 }

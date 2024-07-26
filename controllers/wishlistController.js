@@ -29,4 +29,19 @@ controller.show = async (req, res) => {
     return res.render('wishlist');
 }
 
+controller.remove = async (req, res) => {
+    let userId = 1;
+    let productId = isNaN(req.body.id) ? 0 : parseInt(req.body.id);
+    let product = await models.Product.findByPk(productId);
+    if (product) {
+        let wishlists = await models.Wishlist.findOne({ where: { userId, productId } });
+        if (wishlists) {
+            await models.Wishlist.destroy({ where: { userId, productId } });
+        }
+    }
+    let wishlistsQuantity = await models.Wishlist.count({ where: { userId } });
+    console.log(wishlistsQuantity);
+    res.json({ quantity: wishlistsQuantity });
+}
+
 module.exports = controller;
