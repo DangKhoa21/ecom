@@ -20,25 +20,35 @@
                     <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
                         <div class="col-12">
                             <div class="form-check text-start my-3">
-                                <input type="checkbox" class="form-check-input bg-primary border-0" id="Transfer-1" name="payment" value="DBT">
+                                <input type="checkbox" class="form-check-input bg-primary border-0" id="Transfer-1"
+                                    name="payment" value="DBT">
                                 <label class="form-check-label" for="Transfer-1">Direct Bank Transfer</label>
                             </div>
-                            <p class="text-start text-dark">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be completed until the funds have cleared in our account.</p>
+                            <p class="text-start text-dark">Make your payment directly into our bank account. Please use
+                                your Order ID as the payment reference. Your order will not be completed until the funds
+                                have cleared in our account.</p>
                         </div>
                     </div>
                     <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
                         <div class="col-12">
                             <div class="form-check text-start my-3">
-                                <input type="checkbox" class="form-check-input bg-primary border-0" id="Paypal-1" name="payment" value="PAYPAL">
+                                <input type="checkbox" class="form-check-input bg-primary border-0" id="Paypal-1"
+                                    name="payment" value="PAYPAL">
                                 <label class="form-check-label" for="Paypal-1">Paypal</label>
                             </div>
                         </div>
                     </div>
                     <div class="row g-4 text-center align-items-center justify-content-end pt-4">
                         <div class="col-4">
-                            <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place Order</button>
+                            <button type="submit"
+                                class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place
+                                Order</button>
                         </div>
                     </div>
+
+                    <div id="paypal-button-container"></div>
+                    <p id="result-message"></p>
+
                 </div>
                 <div class="col-md-12 col-lg-5 col-xl-5">
                     {{#with cart}}
