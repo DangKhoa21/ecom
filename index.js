@@ -20,6 +20,10 @@ const { createOrder } = require('./controllers/paypal');
 // });
 // redisClient.connect().catch(console.error);
 
+
+const passport = require('./controllers/passport');
+const flash = require('connect-flash');
+const { isStrongPassword } = require('validator');
 //config public static folder
 app.use(express.static(__dirname + '/public'));
 
@@ -58,12 +62,19 @@ app.use(session({
     }
 }));
 
+//cau hinh su dung passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+//cau hinh su dung connect-flash
+app.use(flash());
+
 // middleware to initialize cart
 app.use((req, res, next) => {
     let Cart = require('./controllers/cart');
     req.session.cart = new Cart(req.session.cart ? req.session.cart : {});
     res.locals.quantity = req.session.cart.quantity;
-
+    res.locals.isLoggedIn = req.isAuthenticated();
     next();
 })
 
@@ -93,6 +104,7 @@ app.post("/api/orders", async (req, res) => {
 // routes
 app.use('/shop', require('./routes/shopRouter'));
 app.use('/', require('./routes/indexRouter'));
+app.use('/users', require('./routes/authRouter'));
 app.use('/users', require('./routes/usersRouter'));
 
 app.use((req, res, next) => {
