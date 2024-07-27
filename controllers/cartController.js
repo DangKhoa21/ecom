@@ -27,7 +27,7 @@ controller.update = (req, res) => {
 
     if (quantity > 0) {
         let updatedItem = req.session.cart.update(id, quantity);
-        
+
         return res.json({
             item: updatedItem,
             quantity: req.session.cart.quantity,

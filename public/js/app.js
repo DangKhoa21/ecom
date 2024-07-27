@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 window.paypal
     .Buttons({
         style: {
@@ -13,6 +15,13 @@ window.paypal
         },
         async createOrder() {
             try {
+                const res = await fetch("/api/getCart", {
+                    method: "GET"
+                });
+
+                const userCart = await res.json();
+                // console.log(userCart);
+
                 const response = await fetch("/api/orders", {
                     method: "POST",
                     headers: {
@@ -21,12 +30,7 @@ window.paypal
                     // use the "body" param to optionally pass additional order information
                     // like product ids and quantities
                     body: JSON.stringify({
-                        cart: [
-                            {
-                                id: "YOUR_PRODUCT_ID",
-                                quantity: "YOUR_PRODUCT_QUANTITY",
-                            },
-                        ],
+                        cart: userCart.cart
                     }),
                 });
 

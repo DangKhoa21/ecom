@@ -11,6 +11,8 @@ const session = require('express-session');
 const redisStore = require('connect-redis').default;
 const { createClient } = require('redis');
 
+// Paypal
+const { createOrder } = require('./controllers/paypal');
 
 
 // const redisClient = createClient({    
@@ -64,6 +66,29 @@ app.use((req, res, next) => {
 
     next();
 })
+
+
+app.get("/api/getCart", (req, res) => {
+    // console.log("reach api get cart")
+    console.log(req.session.cart.getCart())
+    return res.json({
+        cart: req.session.cart.getCart()
+    });
+})
+
+// Test paypal
+// createOrder route
+app.post("/api/orders", async (req, res) => {
+    try {
+        // use the cart information passed from the front-end to calculate the order amount detals
+        const { cart } = req.body;
+        const { jsonResponse, httpStatusCode } = await createOrder(cart);
+        res.status(httpStatusCode).json(jsonResponse);
+    } catch (error) {
+        console.error("Failed to create order:", error);
+        res.status(500).json({ error: "Failed to create order." });
+    }
+});
 
 // routes
 app.use('/shop', require('./routes/shopRouter'));
