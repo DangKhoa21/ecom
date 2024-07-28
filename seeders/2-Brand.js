@@ -4,10 +4,10 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     const items = [
-      { name: 'Nintendo', imagePath: '/img/brand-riot.png' },
-      { name: 'Sony Interactive', imagePath: '/img/brand-riot.png' },
-      { name: 'Electronic Arts', imagePath: '/img/brand-riot.png' },
-      { name: 'Activision Blizzard', imagePath: '/img/brand-riot.png' },
+      { name: 'Nintendo', imagePath: '/img/brand-nintendo.png' },
+      { name: 'Sony Interactive', imagePath: '/img/brand-sony-interactive.png' },
+      { name: 'Electronic Arts', imagePath: '/img/brand-ea.png' },
+      { name: 'Activision Blizzard', imagePath: '/img/brand-activision-blizzard.png' },
       { name: 'Riot', imagePath: '/img/brand-riot.png' },
     ];
     items.forEach(item => {

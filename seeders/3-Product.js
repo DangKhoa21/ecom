@@ -6,7 +6,7 @@ module.exports = {
     const items = [
       {
           "name": "The Legend of Zelda: Breath of the Wild",
-          "imagePath": "/img/fruite-item-1.jpg",
+          "imagePath": "/img/zelda-1.avif",
           "oldPrice": 59.99,
           "price": 49.99,
           "summary": "Explore the vast world of Hyrule in this epic adventure.",
@@ -18,7 +18,7 @@ module.exports = {
       },
       {
           "name": "FIFA 23",
-          "imagePath": "/img/fruite-item-2.jpg",
+          "imagePath": "/img/fifa-23-1.jpg",
           "oldPrice": 69.99,
           "price": 59.99,
           "summary": "The latest installment in the FIFA series with updated teams and features.",
@@ -30,7 +30,7 @@ module.exports = {
       },
       {
           "name": "Overwatch 2",
-          "imagePath": "/img/fruite-item-3.jpg",
+          "imagePath": "/img/overwatch-2-1.webp",
           "oldPrice": 49.99,
           "price": 39.99,
           "summary": "Team-based shooter with new heroes and maps.",
@@ -42,7 +42,7 @@ module.exports = {
       },
       {
           "name": "Assassin's Creed Valhalla",
-          "imagePath": "/img/fruite-item-4.jpg",
+          "imagePath": "/img/assassin's-creed-1.jpg",
           "oldPrice": 79.99,
           "price": 69.99,
           "summary": "Become a legendary Viking warrior in this open-world adventure.",
@@ -54,7 +54,7 @@ module.exports = {
       },
       {
           "name": "The Sims 4",
-          "imagePath": "/img/fruite-item-5.jpg",
+          "imagePath": "/img/the-sims-4-1.jpg",
           "oldPrice": 49.99,
           "price": 39.99,
           "summary": "Create and control people in a virtual world.",
@@ -66,7 +66,7 @@ module.exports = {
       },
       {
           "name": "Cyberpunk 2077",
-          "imagePath": "/img/fruite-item-6.jpg",
+          "imagePath": "/img/cyberpunk-2077-1.avif",
           "oldPrice": 59.99,
           "price": 49.99,
           "summary": "Open-world action-adventure story set in Night City.",
@@ -78,7 +78,7 @@ module.exports = {
       },
       {
           "name": "League of Legends",
-          "imagePath": "/img/fruite-item-1.jpg",
+          "imagePath": "/img/league-of-legends-1.webp",
           "oldPrice": 0.00,
           "price": 0.00,
           "summary": "A fast-paced, competitive online game.",
@@ -90,7 +90,7 @@ module.exports = {
       },
       {
           "name": "Fortnite",
-          "imagePath": "/img/fruite-item-2.jpg",
+          "imagePath": "/img/fortnite-1.jpg",
           "oldPrice": 0.00,
           "price": 0.00,
           "summary": "A battle royale game where you build and fight to be the last one standing.",
@@ -102,7 +102,7 @@ module.exports = {
       },
       {
           "name": "Call of Duty: Warzone",
-          "imagePath": "/img/fruite-item-3.jpg",
+          "imagePath": "/img/cod-warzone-1.webp",
           "oldPrice": 0.00,
           "price": 0.00,
           "summary": "A battle royale experience from the world of Call of Duty.",
@@ -114,7 +114,7 @@ module.exports = {
       },
       {
           "name": "Gran Turismo 7",
-          "imagePath": "/img/fruite-item-4.jpg",
+          "imagePath": "/img/gran-turismo-7-1.jpg",
           "oldPrice": 69.99,
           "price": 59.99,
           "summary": "A realistic driving simulator.",
@@ -126,7 +126,7 @@ module.exports = {
       },
       {
           "name": "Apex Legends",
-          "imagePath": "/img/fruite-item-5.jpg",
+          "imagePath": "/img/apex-legends-1.jpg",
           "oldPrice": 0.00,
           "price": 0.00,
           "summary": "A free-to-play battle royale game.",
@@ -138,7 +138,7 @@ module.exports = {
       },
       {
           "name": "Valorant",
-          "imagePath": "/img/fruite-item-6.jpg",
+          "imagePath": "/img/valorant-1.webp",
           "oldPrice": 0.00,
           "price": 0.00,
           "summary": "A 5v5 character-based tactical shooter.",
@@ -150,7 +150,7 @@ module.exports = {
       },
       {
           "name": "Spider-Man: Miles Morales",
-          "imagePath": "/img/fruite-item-1.jpg",
+          "imagePath": "/img/spider-man-1.webp",
           "oldPrice": 49.99,
           "price": 39.99,
           "summary": "A new adventure in the Spider-Man universe.",
@@ -162,7 +162,7 @@ module.exports = {
       },
       {
           "name": "Ghost of Tsushima",
-          "imagePath": "/img/fruite-item-2.jpg",
+          "imagePath": "/img/ghost-of-tsushima-1.avif",
           "oldPrice": 69.99,
           "price": 59.99,
           "summary": "An open-world action-adventure set in feudal Japan.",
@@ -174,7 +174,7 @@ module.exports = {
       },
       {
           "name": "Battlefield 2042",
-          "imagePath": "/img/fruite-item-3.jpg",
+          "imagePath": "/img/battlefield-2042-1.jpg",
           "oldPrice": 69.99,
           "price": 59.99,
           "summary": "An epic-scale warfare game.",
@@ -186,7 +186,7 @@ module.exports = {
       },
       {
           "name": "Destiny 2",
-          "imagePath": "/img/fruite-item-4.jpg",
+          "imagePath": "/img/destiny-2-1.jpg",
           "oldPrice": 0.00,
           "price": 0.00,
           "summary": "A multiplayer first-person shooter.",
@@ -198,7 +198,7 @@ module.exports = {
       },
       {
           "name": "Animal Crossing: New Horizons",
-          "imagePath": "/img/fruite-item-5.jpg",
+          "imagePath": "/img/animal-crossing-1.avif",
           "oldPrice": 59.99,
           "price": 49.99,
           "summary": "Create your own paradise in this social simulation game.",
@@ -210,7 +210,7 @@ module.exports = {
       },
       {
           "name": "Hades",
-          "imagePath": "/img/fruite-item-1.jpg",
+          "imagePath": "/img/hades-1.jpg",
           "oldPrice": 24.99,
           "price": 19.99,
           "summary": "Battle out of Hell in this rogue-like dungeon crawler.",
@@ -222,7 +222,7 @@ module.exports = {
       },
       {
           "name": "Monster Hunter: World",
-          "imagePath": "/img/fruite-item-2.jpg",
+          "imagePath": "/img/monster-hunter-1.jpg",
           "oldPrice": 39.99,
           "price": 29.99,
           "summary": "Hunt down ferocious monsters in a living, breathing ecosystem.",
@@ -234,7 +234,7 @@ module.exports = {
       },
       {
           "name": "Red Dead Redemption 2",
-          "imagePath": "/img/fruite-item-3.jpg",
+          "imagePath": "/img/red-dead-redemption-2-1.jpg",
           "oldPrice": 59.99,
           "price": 49.99,
           "summary": "An epic tale of life in America at the dawn of the modern age.",
@@ -246,7 +246,7 @@ module.exports = {
       },
       {
           "name": "Resident Evil Village",
-          "imagePath": "/img/fruite-item-4.jpg",
+          "imagePath": "/img/resident-evil-village-1.jpg",
           "oldPrice": 59.99,
           "price": 49.99,
           "summary": "Experience survival horror like never before in the eighth major installment in the Resident Evil series.",
@@ -258,7 +258,7 @@ module.exports = {
       },
       {
           "name": "Halo Infinite",
-          "imagePath": "/img/fruite-item-5.jpg",
+          "imagePath": "/img/halo-infinite-1.webp",
           "oldPrice": 59.99,
           "price": 49.99,
           "summary": "The legendary Halo series returns with the most expansive Master Chief campaign yet.",

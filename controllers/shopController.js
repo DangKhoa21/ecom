@@ -35,6 +35,14 @@ controller.getData = async (req, res, next) => {
     });
     res.locals.tags = tags;
 
+    // Get featured products
+    const featuredProducts = await Product.findAll({
+        attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
+        order: [['stars', 'DESC']],
+        limit: 3,
+    });
+    res.locals.featuredProducts = featuredProducts;
+
     next();
 }
 

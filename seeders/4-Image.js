@@ -6,7 +6,7 @@ module.exports = {
     const items = [
       {
         "name": "Zelda pic 1",
-        "imagePath": "/img/fruite-item-1.jpg",
+        "imagePath": "/img/zelda-1.avif",  
         "productId": 1
       },
       {
@@ -21,7 +21,7 @@ module.exports = {
       },
       {
         "name": "FIFA 23 pic 1",
-        "imagePath": "/img/fruite-item-4.jpg",
+        "imagePath": "/img/fifa-23-1.jpg",  
         "productId": 2
       },
       {
@@ -31,7 +31,7 @@ module.exports = {
       },
       {
         "name": "Overwatch 2 pic 1",
-        "imagePath": "/img/fruite-item-6.jpg",
+        "imagePath": "/img/overwatch-2-1.webp",  
         "productId": 3
       },
       {
@@ -41,7 +41,7 @@ module.exports = {
       },
       {
         "name": "Assassin's Creed Valhalla pic 1",
-        "imagePath": "/img/fruite-item-2.jpg",
+        "imagePath": "/img/assassin's-creed-1.jpg",  
         "productId": 4
       },
       {
@@ -51,7 +51,7 @@ module.exports = {
       },
       {
         "name": "The Sims 4 pic 1",
-        "imagePath": "/img/fruite-item-4.jpg",
+        "imagePath": "/img/the-sims-4-1.jpg",  
         "productId": 5
       },
       {
@@ -61,7 +61,7 @@ module.exports = {
       },
       {
         "name": "Cyberpunk 2077 pic 1",
-        "imagePath": "/img/fruite-item-6.jpg",
+        "imagePath": "/img/cyberpunk-2077-1.avif",  
         "productId": 6
       },
       {
@@ -71,7 +71,7 @@ module.exports = {
       },
       {
         "name": "League of Legends pic 1",
-        "imagePath": "/img/fruite-item-2.jpg",
+        "imagePath": "/img/league-of-legends-1.webp",  
         "productId": 7
       },
       {
@@ -81,7 +81,7 @@ module.exports = {
       },
       {
         "name": "Fortnite pic 1",
-        "imagePath": "/img/fruite-item-4.jpg",
+        "imagePath": "/img/fortnite-1.jpg",  
         "productId": 8
       },
       {
@@ -91,7 +91,7 @@ module.exports = {
       },
       {
         "name": "Call of Duty: Warzone pic 1",
-        "imagePath": "/img/fruite-item-6.jpg",
+        "imagePath": "/img/cod-warzone-1.webp",  
         "productId": 9
       },
       {
@@ -101,7 +101,7 @@ module.exports = {
       },
       {
         "name": "Gran Turismo 7 pic 1",
-        "imagePath": "/img/fruite-item-2.jpg",
+        "imagePath": "/img/gran-turismo-7-1.jpg",  
         "productId": 10
       },
       {
@@ -111,7 +111,7 @@ module.exports = {
       },
       {
         "name": "Apex Legends pic 1",
-        "imagePath": "/img/fruite-item-4.jpg",
+        "imagePath": "/img/apex-legends-1.jpg",  
         "productId": 11
       },
       {
@@ -121,7 +121,7 @@ module.exports = {
       },
       {
         "name": "Valorant pic 1",
-        "imagePath": "/img/fruite-item-6.jpg",
+        "imagePath": "/img/valorant-1.webp",  
         "productId": 12
       },
       {
@@ -131,7 +131,7 @@ module.exports = {
       },
       {
         "name": "Spider-Man: Miles Morales pic 1",
-        "imagePath": "/img/fruite-item-2.jpg",
+        "imagePath": "/img/spider-man-1.webp",  
         "productId": 13
       },
       {
@@ -141,7 +141,7 @@ module.exports = {
       },
       {
         "name": "Ghost of Tsushima pic 1",
-        "imagePath": "/img/fruite-item-4.jpg",
+        "imagePath": "/img/ghost-of-tsushima-1.avif",  
         "productId": 14
       },
       {
@@ -151,7 +151,7 @@ module.exports = {
       },
       {
         "name": "Battlefield 2042 pic 1",
-        "imagePath": "/img/fruite-item-6.jpg",
+        "imagePath": "/img/battlefield-2042-1.jpg",  
         "productId": 15
       },
       {
@@ -161,7 +161,7 @@ module.exports = {
       },
       {
         "name": "Destiny 2 pic 1",
-        "imagePath": "/img/fruite-item-2.jpg",
+        "imagePath": "/img/destiny-2-1.jpg",  
         "productId": 16
       },
       {
@@ -171,7 +171,7 @@ module.exports = {
       },
       {
         "name": "Animal Crossing: New Horizons pic 1",
-        "imagePath": "/img/fruite-item-4.jpg",
+        "imagePath": "/img/animal-crossing-1.avif",  
         "productId": 17
       },
       {
@@ -181,7 +181,7 @@ module.exports = {
       },
       {
         "name": "Hades pic 1",
-        "imagePath": "/img/fruite-item-6.jpg",
+        "imagePath": "/img/hades-1.jpg",  
         "productId": 18
       },
       {
@@ -191,7 +191,7 @@ module.exports = {
       },
       {
         "name": "Monster Hunter: World pic 1",
-        "imagePath": "/img/fruite-item-2.jpg",
+        "imagePath": "/img/monster-hunter-1.jpg",  
         "productId": 19
       },
       {
@@ -201,7 +201,7 @@ module.exports = {
       },
       {
         "name": "Red Dead Redemption 2 pic 1",
-        "imagePath": "/img/fruite-item-4.jpg",
+        "imagePath": "/img/red-dead-redemption-2-1.jpg",  
         "productId": 20
       },
       {
@@ -211,7 +211,7 @@ module.exports = {
       },
       {
         "name": "Resident Evil Village pic 1",
-        "imagePath": "/img/fruite-item-6.jpg",
+        "imagePath": "/img/resident-evil-village-1.jpg",  
         "productId": 21
       },
       {
@@ -221,7 +221,7 @@ module.exports = {
       },
       {
         "name": "Halo Infinite pic 1",
-        "imagePath": "/img/fruite-item-2.jpg",
+        "imagePath": "/img/halo-infinite-1.webp",  
         "productId": 22
       },
       {
