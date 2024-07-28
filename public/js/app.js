@@ -1,5 +1,7 @@
 'use strict';
 
+// saveOrders = require("../../controllers/usersController")
+
 window.paypal
     .Buttons({
         style: {
@@ -49,8 +51,24 @@ window.paypal
             }
         },
         async onApprove(data, actions) {
+            // const response = await fetch('/users/saveOrders', {
+            //     method: "POST",
+            // });
+
             return actions.order.capture().then((details) => {
                 alert("Transaction completed by " + details.payer.name.given_name)
+
+                // window.location.href = "/users/saveOrders";
+                // Get the form
+                const form = document.getElementById('orderForm');
+
+                const paypalCheckbox = document.getElementById('Paypal-1');
+                if (paypalCheckbox) {
+                    paypalCheckbox.checked = true;
+                }
+
+                // Submit the form
+                form.submit();
             })
             try {
                 const response = await fetch(`/api/orders/${data.orderID}/capture`, {

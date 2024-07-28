@@ -6,7 +6,7 @@ const controller = require('../controllers/usersController');
 const wishlistController = require('../controllers/wishlistController');
 
 router.get('/checkout', controller.checkout);
-router.post('/placeorders', controller.placeorders);
+router.post('/placeOrders', controller.placeOrders);
 
 router.get('/wishlist', wishlistController.show);
 router.post('/wishlist', wishlistController.add);

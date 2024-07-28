@@ -15,7 +15,7 @@ const { createClient } = require('redis');
 const { createOrder } = require('./controllers/paypal');
 
 
-const redisClient = createClient({    
+const redisClient = createClient({
     url: process.env.REDIS_URL
 });
 redisClient.connect().catch(console.error);

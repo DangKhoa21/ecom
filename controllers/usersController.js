@@ -11,12 +11,12 @@ controller.checkout = (req, res) => {
     return res.redirect('/shop');
 }
 
-controller.placeorders = (req, res) => {
+controller.placeOrders = (req, res) => {
     let userId = 1;
     let cart = req.session.cart;
     cart.paymentMethod = req.body.payment;
 
-    switch(req.body.payment) {
+    switch (req.body.payment) {
         case 'PAYPAL':
             saveOrders(req, res, 'PAID');
             break;
@@ -30,9 +30,9 @@ controller.placeorders = (req, res) => {
 
 async function saveOrders(req, res, status) {
     let userId = 1;
-    let { items, ...others} = req.session.cart.getCart();
+    let { items, ...others } = req.session.cart.getCart();
     if (items.length > 0) {
-        let order = await models.Order.create({...others, userId, status});
+        let order = await models.Order.create({ ...others, userId, status });
         let orderDetails = [];
         items.forEach(item => {
             orderDetails.push({
@@ -44,7 +44,7 @@ async function saveOrders(req, res, status) {
         await models.OrderDetail.bulkCreate(orderDetails);
         req.session.cart.clear();
     }
-    return res.render('error', {message: 'Order Placed Successfully!'});
+    return res.render('error', { message: 'Order Placed Successfully!' });
 }
 
 module.exports = controller
