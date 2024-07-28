@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 window.paypal
     .Buttons({
         style: {
@@ -11,7 +9,7 @@ window.paypal
             label: "paypal",
         },
         message: {
-            amount: 100,
+            amount: 1,
         },
         async createOrder() {
             try {
@@ -51,6 +49,9 @@ window.paypal
             }
         },
         async onApprove(data, actions) {
+            return actions.order.capture().then((details) => {
+                alert("Transaction completed by " + details.payer.name.given_name)
+            })
             try {
                 const response = await fetch(`/api/orders/${data.orderID}/capture`, {
                     method: "POST",
@@ -80,6 +81,7 @@ window.paypal
                 } else {
                     // (3) Successful transaction -> Show confirmation or thank you message
                     // Or go to another URL:  actions.redirect('thank_you.html');
+                    console.log("Payment successfully");
                     const transaction =
                         orderData?.purchase_units?.[0]?.payments?.captures?.[0] ||
                         orderData?.purchase_units?.[0]?.payments?.authorizations?.[0];

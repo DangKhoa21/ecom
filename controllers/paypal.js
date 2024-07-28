@@ -63,14 +63,37 @@ const createOrder = async (cart) => {
     const accessToken = await generateAccessToken();
     const url = `${base}/v2/checkout/orders`;
 
+    // console.log(cart.items.map(item => {
+    //     return {
+    //         name: item.product.name,
+    //         total: item.total
+    //     }
+    // }));
+
     const payload = {
         intent: "CAPTURE",
         purchase_units: [
             {
                 amount: {
                     currency_code: "USD",
-                    value: cart.total.toString(),
+                    value: cart.total,
+                    breakdown: {
+                        item_total: {
+                            currency_code: "USD",
+                            value: cart.total,
+                        }
+                    }
                 },
+                items: cart.items.map(item => {
+                    return {
+                        name: item.product.name,
+                        unit_amount: {
+                            currency_code: "USD",
+                            value: item.total,
+                        },
+                        quantity: 1
+                    }
+                })
             },
         ],
     };

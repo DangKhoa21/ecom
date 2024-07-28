@@ -94,6 +94,10 @@ app.post("/api/orders", async (req, res) => {
         // use the cart information passed from the front-end to calculate the order amount detals
         const { cart } = req.body;
         const { jsonResponse, httpStatusCode } = await createOrder(cart);
+        // console.log("httpStatusCode");
+        // console.log(httpStatusCode);
+        // console.log("Json response");
+        // console.log(jsonResponse);
         res.status(httpStatusCode).json(jsonResponse);
     } catch (error) {
         console.error("Failed to create order:", error);
