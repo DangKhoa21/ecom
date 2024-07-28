@@ -31,7 +31,6 @@ passport.use('local-login', new LocalStrategy({
 }, async (req, email, password, done) => {
     if (email) {
         email = email.toLowerCase();
-
     }
     try {
         if (!req.user) { //neu user chua dang nhap
@@ -39,7 +38,8 @@ passport.use('local-login', new LocalStrategy({
             if (!user) { //email does not exist
                 return done(null, false, req.flash('loginMessage', 'Email does not exist.'));
             }
-            if (bcrypt.compareSync(password, user.password)) { // if password incorrect
+            console.log("Checking password", password, "with", user.password);
+            if (!bcrypt.compareSync(password, user.password)) { // if password incorrect
                 return done(null, false, req.flash('loginMessage', 'Password is incorrect.'));
             }
             // allow login
