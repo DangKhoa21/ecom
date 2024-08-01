@@ -5,7 +5,7 @@ const { where } = require('sequelize');
 let models = require('../models');
 
 controller.add = async (req, res) => {
-    let userId = 1;
+    let userId = req.user.id;
     let productId = isNaN(req.body.id) ? 0 : parseInt(req.body.id);
     let product = await models.Product.findByPk(productId);
     if (product) {
@@ -17,7 +17,7 @@ controller.add = async (req, res) => {
 }
 
 controller.show = async (req, res) => {
-    let userId = 1;
+    let userId = req.user.id;
     let wishlists = await models.Wishlist.findAll({ 
         where: { userId },
         include: [{ 
@@ -30,7 +30,7 @@ controller.show = async (req, res) => {
 }
 
 controller.remove = async (req, res) => {
-    let userId = 1;
+    let userId = req.user.id;
     let productId = isNaN(req.body.id) ? 0 : parseInt(req.body.id);
     let product = await models.Product.findByPk(productId);
     if (product) {

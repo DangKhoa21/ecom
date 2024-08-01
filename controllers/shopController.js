@@ -171,7 +171,7 @@ controller.showDetails = async (req, res) => {
 }
 
 controller.addReview = async (req, res) => {
-    let userId = 2;
+    let userId = req.user.id;
     let productId = isNaN(req.params.id) ? 0 : parseInt(req.params.id);
     let review = req.body.review;
     let stars = req.body.stars || 0;

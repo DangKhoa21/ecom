@@ -88,7 +88,7 @@
                         </div>
                         <a href="/contact" class="nav-item nav-link">Contact</a>
                     </div>
-                    <div class="d-flex m-3 me-0">
+                    <div class="d-flex m-3 me-0 align-items-center">
                         <button
                             class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4"
                             data-bs-toggle="modal" data-bs-target="#searchModal"><i
@@ -100,9 +100,17 @@
                                 style="top: -5px; left: 15px; height: 20px; min-width: 20px;">{{ quantity }}</span>
                         </a>
                         {{#if isLoggedIn}}
-                        <a href="/users/account" class="my-auto">
-                            <i class="fas fa-user fa-2x"></i>
-                        </a>
+                        <div class="dropdown">
+                            <a class="my-auto" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                               <i class="fas fa-user fa-2x"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end bg-light border-0" aria-labelledby="dropdownMenuLink">
+                                <li><a class="dropdown-item" href="/users/account">Account</a></li>
+                                <li><a class="dropdown-item" href="/users/wishlist">Wishlist</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/users/logout">Log out</a></li>
+                            </ul>
+                        </div>
                         {{else}}
                         <div class="dropdown">
                             <a href="/users/login-sign-up" class="nav-item nav-link">Login or Sign up</a>

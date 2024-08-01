@@ -2,11 +2,14 @@
 
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/usersController');
+const userController = require('../controllers/usersController');
 const wishlistController = require('../controllers/wishlistController');
+const authController = require('../controllers/authController');
 
-router.get('/checkout', controller.checkout);
-router.post('/placeOrders', controller.placeOrders);
+router.use(authController.isLoggedIn);
+
+router.get('/checkout', userController.checkout);
+router.post('/placeOrders', userController.placeOrders);
 
 router.get('/wishlist', wishlistController.show);
 router.post('/wishlist', wishlistController.add);

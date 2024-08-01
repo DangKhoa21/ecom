@@ -38,7 +38,6 @@ passport.use('local-login', new LocalStrategy({
             if (!user) { //email does not exist
                 return done(null, false, req.flash('loginMessage', 'Email does not exist.'));
             }
-            console.log("Checking password", password, "with", user.password);
             if (!bcrypt.compareSync(password, user.password)) { // if password incorrect
                 return done(null, false, req.flash('loginMessage', 'Password is incorrect.'));
             }

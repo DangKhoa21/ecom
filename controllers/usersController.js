@@ -12,7 +12,6 @@ controller.checkout = (req, res) => {
 }
 
 controller.placeOrders = (req, res) => {
-    let userId = 1;
     let cart = req.session.cart;
     cart.paymentMethod = req.body.payment;
 
@@ -29,7 +28,7 @@ controller.placeOrders = (req, res) => {
 }
 
 async function saveOrders(req, res, status) {
-    let userId = 1;
+    let userId = req.user.id;
     let { items, ...others } = req.session.cart.getCart();
     if (items.length > 0) {
         let order = await models.Order.create({ ...others, userId, status });
