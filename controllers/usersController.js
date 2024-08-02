@@ -46,4 +46,23 @@ async function saveOrders(req, res, status) {
     return res.render('error', { message: 'Order Placed Successfully!' });
 }
 
+controller.addReview = async (req, res) => {
+    let userId = req.user.id;
+    let productId = isNaN(req.params.id) ? 0 : parseInt(req.params.id);
+    let review = req.body.review;
+    let stars = req.body.stars || 0;
+    let product = await models.Product.findByPk(productId);
+    if (product && review.length > 0) {
+        let reviews = await models.Review.findOne({ where: { userId, productId } });
+        if (reviews) 
+            await reviews.update({ review, stars });    
+        else
+            await models.Review.create({ userId, productId, review, stars });
+
+        res.redirect(`/shop/${productId}`);
+    }
+    else
+        res.redirect(`/shop/${productId}`);
+}
+
 module.exports = controller

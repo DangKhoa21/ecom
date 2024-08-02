@@ -41,12 +41,12 @@
                     <div class="row g-4 text-center align-items-center justify-content-end pt-4">
                         <div class="col-4">
                             <button type="submit"
-                                class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place
+                                class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary d-none" id="placeOrderButton">Place
                                 Order</button>
                         </div>
                     </div>
 
-                    <div id="paypal-button-container"></div>
+                    <div id="paypal-button-container" class="d-none"></div>
                     <p id="result-message"></p>
 
                 </div>
@@ -64,7 +64,7 @@
                                 {{/each}}
                             </div>
                             <div class="py-4 border-top d-flex justify-content-between">
-                                <h5 class="mb-0 ps-4 me-4">Sutotal</h5>
+                                <h5 class="mb-0 ps-4 me-4">Subtotal</h5>
                                 <p class="mb-0 pe-4">${{subtotal}}</p>
                             </div>
                             <div class="pb-4 d-flex justify-content-between">
@@ -84,3 +84,28 @@
     </div>
 </div>
 <!-- Checkout Page End -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const bankCheckbox = document.getElementById('Transfer-1');
+    const paypalCheckbox = document.getElementById('Paypal-1');
+    const placeOrderButton = document.getElementById('placeOrderButton');
+    const paypalButtonContainer = document.getElementById('paypal-button-container');
+
+    function updateButtonVisibility() {
+        if (bankCheckbox.checked) {
+            placeOrderButton.classList.remove('d-none');
+            paypalButtonContainer.classList.add('d-none');
+        } else if (paypalCheckbox.checked) {
+            placeOrderButton.classList.add('d-none');
+            paypalButtonContainer.classList.remove('d-none');
+        } else {
+            placeOrderButton.classList.add('d-none');
+            paypalButtonContainer.classList.add('d-none');
+        }
+    }
+
+    bankCheckbox.addEventListener('change', updateButtonVisibility);
+    paypalCheckbox.addEventListener('change', updateButtonVisibility);
+});
+</script>

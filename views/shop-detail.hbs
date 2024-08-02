@@ -94,7 +94,8 @@
                             </div>
                         </div>
                     </div>
-                    <form action="/shop/{{id}}/review" method="post">
+                    {{#if ../isLoggedIn}}
+                    <form action="/users/{{id}}/review" method="post">
                         <h4 class="mb-4 fw-bold">Leave a Review</h4>
                         <div class="row g-4">
                             <div class="col-lg-12">
@@ -122,6 +123,13 @@
                             </div>
                         </div>
                     </form>
+                    {{else}}
+                    <h4 class="mb-2 fw-bold">Leave a Review</h4>
+                    <p>Share your thoughts with other customers</p>
+                    <a href="/users/login-sign-up?reqUrl=/shop/{{id}}" class="col-3 btn btn-light my-1 mx-3 border-secondary rounded-pill py-2">
+                        Login and review
+                    </a>
+                    {{/if}}
                     {{/with}}
                 </div>
             </div>

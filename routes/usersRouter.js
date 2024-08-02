@@ -11,6 +11,8 @@ router.use(authController.isLoggedIn);
 router.get('/checkout', userController.checkout);
 router.post('/placeOrders', userController.placeOrders);
 
+router.post('/:id/review', userController.addReview);
+
 router.get('/wishlist', wishlistController.show);
 router.post('/wishlist', wishlistController.add);
 router.delete('/wishlist', wishlistController.remove);

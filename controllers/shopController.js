@@ -170,25 +170,6 @@ controller.showDetails = async (req, res) => {
     res.render('shop-detail');
 }
 
-controller.addReview = async (req, res) => {
-    let userId = req.user.id;
-    let productId = isNaN(req.params.id) ? 0 : parseInt(req.params.id);
-    let review = req.body.review;
-    let stars = req.body.stars || 0;
-    let product = await models.Product.findByPk(productId);
-    if (product && review.length > 0) {
-        let reviews = await models.Review.findOne({ where: { userId, productId } });
-        if (reviews) 
-            await reviews.update({ review, stars });    
-        else
-            await models.Review.create({ userId, productId, review, stars });
-
-        res.redirect(`/shop/${productId}`);
-    }
-    else
-        res.redirect(`/shop/${productId}`);
-}
-
 function removeParam(key, sourceURL) {
     var rtn = sourceURL.split("?")[0],
         param,

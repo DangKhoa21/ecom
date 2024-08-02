@@ -16,6 +16,4 @@ router.put('/cart', cartController.update);
 router.delete('/cart', cartController.remove);
 router.delete('/cart/all', cartController.clear);
 
-router.post('/:id/review', controller.addReview);
-
 module.exports = router;
