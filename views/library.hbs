@@ -1,0 +1,47 @@
+<!-- Single Page Header start -->
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center text-white display-6">Library</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+        <li class="breadcrumb-item active text-white">Library</li>
+    </ol>
+</div>
+<!-- Single Page Header End -->
+
+<!-- Library Start -->
+<div class="container mt-5">
+    <div class="row g-4 d-flex justify-content-start">
+        {{#with user}}
+        <div class="col-12">
+            <h3 class="fw-bold">{{firstName}} {{lastName}}'s Library</h3>
+        </div>
+        {{/with}}
+
+        {{#each products}}
+            <div class="col-lg-6 col-xl-4">
+                <div>
+                    {{> featuredProduct id=this.id imagePath=this.imagePath 
+                    name=this.name summary=this.summary isInLibrary='true' }}
+                </div>
+            </div>
+        {{/each}}
+    </div>
+    <div class="col-12" id="pagination">
+        {{{ createPagination pagination paginationClass="pagination d-flex
+        justify-content-center mt-5"
+        leftText="&laquo;" rightText = "&raquo;"}}}
+    </div>
+</div>
+
+<!-- Library End -->
+
+<script>
+    document.querySelectorAll('#pagination li').forEach(li => {
+        li.classList.add('page-item')
+    });
+
+    document.querySelectorAll('#pagination a').forEach(a => {
+        a.classList.add('page-link');
+    })
+</script>

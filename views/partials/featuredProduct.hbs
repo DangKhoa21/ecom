@@ -9,6 +9,14 @@
         <div class="col-6 d-flex flex-column" style="height: 190px;">
             <a href="/shop/{{ id }}" class="h5">{{name}}</a>
             <div class="mt-auto">
+                {{#if isInLibrary}}
+                <div class="d-flex flex-column ">
+                    <p class="mb-3">{{summary}}</p>
+                </div>
+                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                    <i class="fa fa-download me-2 text-primary"></i> Download
+                </a>
+                {{else}}
                 {{{ createStarList stars }}}
                 <div class="d-flex justify-content-around">
                     <h4 class="mb-3">{{price}} $</h4>
@@ -17,6 +25,7 @@
                 <a onclick="addCart({{ id }}, 1)" class="btn border border-secondary rounded-pill px-3 text-primary">
                     <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
                 </a>
+                {{/if}}
             </div>
         </div>
     </div>
