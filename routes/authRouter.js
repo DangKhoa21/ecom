@@ -19,5 +19,7 @@ router.post('/login-sign-up',
     controller.login);
 
 router.get('/logout', controller.logout);
+router.get('/reset-password', controller.showForgotPassword);
+router.post('/reset-password', controller.forgotPassword);
 
 module.exports = router;

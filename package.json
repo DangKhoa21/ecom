@@ -20,7 +20,9 @@
     "express-handlebars-paginate": "^1.0.3",
     "express-session": "^1.18.0",
     "express-validator": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
     "node-fetch": "^3.3.2",
+    "node-mailjet": "^6.0.5",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "redis": "^4.6.15"
