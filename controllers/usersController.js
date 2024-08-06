@@ -2,6 +2,7 @@
 
 const controller = {};
 const models = require('../models');
+const sequelize = require('sequelize');
 
 controller.checkout = (req, res) => {
     if (req.session.cart.quantity > 0) {
@@ -63,6 +64,36 @@ controller.addReview = async (req, res) => {
     }
     else
         res.redirect(`/shop/${productId}`);
+}
+
+controller.show = async (req, res) => {
+    let userId = req.user.id;
+    const user = await models.User.findOne({ 
+        where: { id: userId },
+        attributes: ['firstName', 'lastName', 'email', 'mobile']
+    });
+    res.locals.user = user;
+
+    let orders = await models.Order.findAll({
+        where: { userId },
+        order: [['updatedAt', 'DESC']],
+        attributes: ['id', 'quantity', 'total', 'subtotal', 'discount', 'paymentMethod', 'status', 
+            [sequelize.literal(`to_char("Order"."updatedAt", 'Mon DD, YYYY HH24:MI')`), 'formattedUpdatedAt']],
+        include: [{ 
+            model: models.Product,
+            attributes: ['id', 'name', 'imagePath', 'price']
+        }]
+    });
+
+    if (orders) {
+        orders.forEach(order => {
+            order.formattedUpdatedAt = order.dataValues.formattedUpdatedAt;
+        });
+    }
+
+    res.locals.orders = orders;
+
+    res.render('account');
 }
 
 module.exports = controller

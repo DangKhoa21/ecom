@@ -46,9 +46,15 @@
                         <a onclick="addCart({{ id }}, 1)"
                             class="btn border border-secondary rounded-pill px-4 py-2 mb-4 me-2 text-primary"><i
                                 class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                        {{#if ../isLoggedIn}}
                         <a onclick="addWishlist({{ id }})"
                             class="btn border border-secondary rounded-pill px-4 py-2 mb-4 mx-2 text-primary"><i
                                 class="fa fa-heart me-2 text-primary"></i> Add to wishlist</a>
+                        {{else}}
+                        <a href="/users/login-sign-up?reqUrl=/shop/{{id}}"
+                            class="btn border border-secondary rounded-pill px-4 py-2 mb-4 mx-2 text-primary"><i
+                                class="fa fa-heart me-2 text-primary"></i> Add to wishlist</a>
+                        {{/if}}
                     </div>
                     <div class="col-lg-12">
                         <nav>

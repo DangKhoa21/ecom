@@ -201,6 +201,16 @@
         }
     });
     
+    // Active Menu
+    $('.navbar-nav .nav-link').each(function() {
+        var currentPath = window.location.pathname;
+        var href = $(this).attr('href');
+        if (href === currentPath) {
+            $(this).addClass('active');
+        } else {
+            $(this).removeClass('active');
+        }
+    });
 
 })(jQuery);
 

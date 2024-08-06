@@ -20,9 +20,8 @@ router.delete('/wishlist', wishlistController.remove);
 
 router.get('/library', libraryController.show);
 
-router.get('/account', (req, res) => {
-    res.render('account');
-});
+router.get('/account', userController.show);
+
 router.get('/login-sign-up', (req, res) => {
     res.render('login-sign-up');
 });

@@ -40,4 +40,8 @@ helper.createSpecTable = (specification) => {
     return html;
 };
 
+helper.increment = (num) => {
+    return num + 1;
+}
+
 module.exports = helper

@@ -5,7 +5,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 const expressHandlebars = require('express-handlebars');
-const { createStarList, createSpecTable } = require('./controllers/handlebarsHelper');
+const { createStarList, createSpecTable, increment } = require('./controllers/handlebarsHelper');
 const { createPagination } = require('express-handlebars-paginate');
 const session = require('express-session');
 const redisStore = require('connect-redis').default;
@@ -39,7 +39,8 @@ app.engine('hbs', expressHandlebars.engine({
     helpers: {
         createStarList,
         createPagination,
-        createSpecTable
+        createSpecTable,
+        increment
     }
 }));
 app.set('view engine', 'hbs');

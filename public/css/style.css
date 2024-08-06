@@ -530,6 +530,35 @@
 
 /*** Single Page End ***/
 
+/*** My Account Start ***/
+.my-account .nav-pills {
+    background-color: #f4f6f8;
+    border-radius: 10px;
+}
+
+.my-account .nav-pills .nav-link {
+    width: 100%;
+    padding: 1rem;
+}
+
+.my-account .tab-content .tab-pane {
+    padding: 30px;
+    background-color: #f4f6f8;
+    margin-right: .5rem;
+    margin-left: .5rem;
+    border-radius: 10px;
+}
+
+.my-account .tab-content .table {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.my-account .tab-content .table .thead-dark th {
+    background-color: var(--bs-primary);
+    color: white;
+}
+/** My Account End ***/
 
 /*** Footer Start ***/
 .footer .footer-item .btn-link {
