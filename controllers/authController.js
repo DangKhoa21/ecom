@@ -48,7 +48,7 @@ controller.isLoggedIn = (req, res, next) => {
 }
 
 controller.showForgotPassword = (req, res) => {
-    res.render('reset-password');
+    res.render('forgot-password');
 }
 controller.forgotPassword = async (req, res) => {
     let email = req.body.email;
@@ -56,20 +56,35 @@ controller.forgotPassword = async (req, res) => {
     if (user) {
         const { sign } = require('./jwt');
         const host = req.header('host');
-        const resetLink = `${req.protocol}://${host}/reset?token=${sign(email)}&email=${email}`;
+        const resetLink = `${req.protocol}://${host}/users/reset?token=${sign(email)}&email=${email}`;
         const { sendForgotPasswordMail } = require('./mail');
         sendForgotPasswordMail(user, host, resetLink)
             .then((result) => {
                 console.log('Email has been sent');
-                return res.render('reset-password', { done: true });
+                return res.render('forgot-password', { done: true });
             })
             .catch(error => {
                 console.log(error.statusCode);
-                return res.render('reset-password', { message: 'An error has occured when trying to send to your email. Please check your email address.' });
+                return res.render('forgot-password', { message: 'An error has occured when trying to send to your email. Please check your email address.' });
             });
     } else {
-        return res.render('reset-password', { message: 'Email does not exist.' });
+        return res.render('forgot-password', { message: 'Email does not exist.' });
     }
+}
+
+controller.showResetPassword = (req, res) => {
+    let email = req.query.email;
+    let token = req.query.token;
+    let { verify } = require('./jwt');
+    if (!token || !verify(token)) {
+        return res.render('reset-password', { expired: true });
+    } else {
+        return res.render('reset-password');
+    }
+}
+
+controller.resetPassword = (req, res) => {
+
 }
 
 module.exports = controller;

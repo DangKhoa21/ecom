@@ -51,7 +51,7 @@ controller.showHomepage = async (req, res) => {
 }
 
 controller.showPage = (req, res, next) => {
-    const pages = ['cart', 'checkout', 'contact', 'login-sign-up', 'shop-detail', 'shop', 'testimonial', 'reset-password', 'wishlist', 'account'];
+    const pages = ['cart', 'checkout', 'contact', 'login-sign-up', 'shop-detail', 'shop', 'testimonial', 'forgot-password', 'wishlist', 'account'];
     if (pages.includes(req.params.page))
         return res.render(req.params.page);
     next();

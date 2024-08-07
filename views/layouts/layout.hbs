@@ -80,7 +80,7 @@
                                 <a href="/testimonial" class="dropdown-item">Testimonial</a>
                                 <a href="/404" class="dropdown-item">404 Page</a>
                                 <a href="/users/login-sign-up" class="dropdown-item">Login &amp; Sign-up Page</a>
-                                <a href="/reset-password" class="dropdown-item">Reset Password Page</a>
+                                <a href="/forgot-password" class="dropdown-item">Reset Password Page</a>
                                 <a href="/users/wishlist" class="dropdown-item">Wishlist Page</a>
                                 <a href="/users/account" class="dropdown-item">My Account</a>
                             </div>
@@ -100,13 +100,17 @@
                         </a>
                         {{#if isLoggedIn}}
                         <div class="dropdown">
-                            <a class="my-auto" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                               <i class="fas fa-user fa-2x"></i>
+                            <a class="my-auto" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="fas fa-user fa-2x"></i>
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end bg-light border-0" aria-labelledby="dropdownMenuLink">
+                            <ul class="dropdown-menu dropdown-menu-end bg-light border-0"
+                                aria-labelledby="dropdownMenuLink">
                                 <li><a class="dropdown-item" href="/users/account">Account</a></li>
                                 <li><a class="dropdown-item" href="/users/wishlist">Wishlist</a></li>
-                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
                                 <li><a class="dropdown-item" href="/users/logout">Log out</a></li>
                             </ul>
                         </div>
