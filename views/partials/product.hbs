@@ -21,10 +21,17 @@
             <p class="text-dark fs-3 fw-bold mb-0">${{price}}</p>
             <p class="text-muted fs-5 fw-bold mb-0 text-decoration-line-through">${{oldPrice}}</p>
         </div>
+        {{#if isPurchased}}
+        <div class="d-flex justify-content-end flex-lg-wrap">
+            <a class="btn border rounded-pill px-3 text-muted"><i
+                class="fa fa-check me-2 text-muted"></i> Purchased</a>
+        </div>
+        {{else}}
         <div class="d-flex justify-content-end flex-lg-wrap">
             <a onclick="addCart({{ id }}, 1)" class="btn border border-secondary rounded-pill px-3 text-primary">
                 <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
             </a>
         </div>
+        {{/if}}
     </div>
 </div>
