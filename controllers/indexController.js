@@ -7,32 +7,36 @@ controller.showHomepage = async (req, res) => {
     // Get data model
     const Product = models.Product
     const Category = models.Category;
+    const userId = req.user ? req.user.id : null;
 
     // Get all products
-    const allProducts = await Product.findAll({
+    let allProducts = await Product.findAll({
         attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
         limit: 8,
     });
+    allProducts = await checkForPurchasedProducts(allProducts, userId);
     res.locals.allProducts = allProducts;
 
     // Get feature products
-    const featuredProducts = await Product.findAll({
+    let featuredProducts = await Product.findAll({
         attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
         order: [['stars', 'DESC']],
         limit: 6,
     });
+    featuredProducts = await checkForPurchasedProducts(featuredProducts, userId);
     res.locals.featuredProducts = featuredProducts;
 
     // Get recent products
-    const recentProducts = await Product.findAll({
+    let recentProducts = await Product.findAll({
         attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
         order: [['updatedAt', 'DESC']],
         limit: 8,
     });
+    recentProducts = await checkForPurchasedProducts(recentProducts, userId);
     res.locals.recentProducts = recentProducts;
 
     // Get Category data
-    const categories = await Category.findAll({
+    let categories = await Category.findAll({
         include: [{
             model: Product,
             attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
@@ -40,6 +44,9 @@ controller.showHomepage = async (req, res) => {
         }],
         limit: 4,
     });
+    for (let category of categories) {
+        category.Products = await checkForPurchasedProducts(category.Products, userId);
+    }
     res.locals.categories = categories;
 
     // Get Brand data
@@ -55,6 +62,31 @@ controller.showPage = (req, res, next) => {
     if (pages.includes(req.params.page))
         return res.render(req.params.page);
     next();
+}
+
+async function checkForPurchasedProducts(products, userId) {
+    let productIdList = [];
+    if (userId) {
+        let orders = await models.Order.findAll({
+            where: { userId },
+            include: [{ 
+                model: models.Product,
+                attributes: ['id']
+            }]
+        });
+
+        orders.forEach(order => {
+            productIdList = productIdList.concat(order.Products.map(product => product.id));
+        });
+
+        products = products.map(product => {
+            return {
+                ...product.dataValues,
+                isPurchased: productIdList.includes(product.id)
+            }
+        });
+    }
+    return products;
 }
 
 module.exports = controller;

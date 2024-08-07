@@ -108,7 +108,15 @@ controller.show = async (req, res) => {
         totalRows: count,
         queryParams: req.query
     }
-    //let products = await Product.findAll(options);
+    
+    const userId = req.user ? req.user.id : null;
+    const purchasedProductIds = await getPurchasedProductIds(userId);
+    rows = rows.map(product => {
+        return {
+            ...product.dataValues,
+            isPurchased: purchasedProductIds.includes(product.id)
+        }
+    });
     res.locals.games = rows;
 
     res.render('shop');
@@ -166,7 +174,21 @@ controller.showDetails = async (req, res) => {
         }],
         limit: 8
     });
+
+    const userId = req.user ? req.user.id : null;
+    const purchasedProductIds = await getPurchasedProductIds(userId);
+    relatedProducts = relatedProducts.map(product => {
+        return {
+            ...product.dataValues,
+            isPurchased: purchasedProductIds.includes(product.id)
+        }
+    });
     res.locals.relatedProducts = relatedProducts;
+
+    if (purchasedProductIds.includes(product.id)) {
+        res.locals.isPurchased = true;
+    }
+
     res.render('shop-detail');
 }
 
@@ -186,6 +208,24 @@ function removeParam(key, sourceURL) {
         if (params_arr.length) rtn = rtn + "?" + params_arr.join("&");
     }
     return rtn;
+}
+
+async function getPurchasedProductIds(userId) {
+    let productIdList = [];
+    if (userId) {
+        let orders = await models.Order.findAll({
+            where: { userId },
+            include: [{ 
+                model: models.Product,
+                attributes: ['id']
+            }]
+        });
+
+        orders.forEach(order => {
+            productIdList = productIdList.concat(order.Products.map(product => product.id));
+        });
+    }
+    return productIdList;
 }
 
 module.exports = controller;
