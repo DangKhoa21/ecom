@@ -37,6 +37,13 @@ module.exports = {
             "firstName": "Rosaleen",
             "lastName": "Yelland",
             "mobile": "658-130-3536"
+        }, 
+        {
+            "email": "hmc15011990@gmail.com",
+            "password": "vY3dpY",
+            "firstName": "Hoang",
+            "lastName": "Phuc",
+            "mobile": "768-449-9990"
         }];
         items.forEach(item => {
             item.createdAt = Sequelize.literal('NOW()');
