@@ -15,10 +15,10 @@ const { createClient } = require('redis');
 const { createOrder } = require('./controllers/paypal');
 
 
-// const redisClient = createClient({
-//     url: process.env.REDIS_URL
-// });
-// redisClient.connect().catch(console.error);
+const redisClient = createClient({
+    url: process.env.REDIS_URL
+});
+redisClient.connect().catch(console.error);
 
 
 const passport = require('./controllers/passport');
@@ -54,7 +54,7 @@ app.use(express.urlencoded({
 // session configure
 app.use(session({
     secret: process.env.SESSION_SECRET || 'Group2_S3cret',
-    // store: new redisStore({ client: redisClient }),
+    store: new redisStore({ client: redisClient }),
     resave: false,
     saveUninitialized: false,
     cookie: {
