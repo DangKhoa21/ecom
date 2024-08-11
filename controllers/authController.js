@@ -99,12 +99,17 @@ controller.showResetPassword = (req, res) => {
     if (!token || !verify(token)) {
         return res.render('reset-password', { expired: true });
     } else {
-        return res.render('reset-password');
+        return res.render('reset-password', { email, token });
     }
 }
 
-controller.resetPassword = (req, res) => {
-
+controller.resetPassword = async (req, res) => {
+    let email = req.body.email;
+    let token = req.body.token;
+    let bcrypt = require('bcrypt');
+    let password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8));
+    await models.User.update({ password }, { where: { email } });
+    res.render('reset-password', { done: true });
 }
 
 module.exports = controller;
