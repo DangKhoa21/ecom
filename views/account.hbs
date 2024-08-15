@@ -32,13 +32,10 @@
                         <!-- Dashboard Section Start -->
                         <div class="tab-pane fade show active" id="dashboard-tab" role="tabpanel" aria-labelledby="dashboard-nav">
                             <h3>Dashboard</h3>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. In condimentum quam ac mi viverra
-                                dictum. Aliquam erat volutpat. Nulla hendrerit tortor quis arcu finibus, eu porttitor
-                                nunc pellentesque. Phasellus sed ligula non mi porttitor fringilla. Praesent finibus
-                                faucibus arcu, eu volutpat lacus vehicula at. Phasellus eget semper ante. Suspendisse
-                                tincidunt massa ut metus lacinia tincidunt.
-                            </p>
+                            <h4 class="mt-3">This Year</h4>
+                            <div>
+                                <canvas id="revenueChart"></canvas>
+                            </div>
                         </div>
                         <!-- Dashboard Section End -->
                         
@@ -231,6 +228,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 <script src="lib/easing/easing.min.js"></script>
 <script src="lib/slick/slick.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
@@ -286,7 +284,41 @@ if (activeTab) {
 
 document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', function() {
+        console.log("Test");
         localStorage.setItem('activeTab', this.getAttribute('href'));
     });
+});
+
+const ctx = document.getElementById('revenueChart');
+const revenuePerMonth = JSON.parse('{{{revenuePerMonth}}}');
+const currentYear = new Date().getFullYear();
+const thisYearRevenue = revenuePerMonth[currentYear] || {};
+const months = Object.keys(thisYearRevenue);
+const revenues = Object.values(thisYearRevenue);
+
+new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: months,
+        datasets: [{
+            label: 'Monthly Expenses',
+            data: revenues,
+            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            x: {
+                beginAtZero: true
+            },
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
 });
 </script>

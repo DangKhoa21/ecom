@@ -93,6 +93,24 @@ controller.show = async (req, res) => {
     }
     res.locals.orders = orders;
 
+    const revenuePerMonth = {};
+    orders.forEach(order => {
+        const date = new Date(order.updatedAt);
+        const year = date.getFullYear();
+        const month = date.toLocaleString('default', { month: 'short' });
+
+        if (!revenuePerMonth[year]) {
+            revenuePerMonth[year] = {
+                Jan: 0, Feb: 0, Mar: 0, Apr: 0, May: 0, Jun: 0,
+                Jul: 0, Aug: 0, Sep: 0, Oct: 0, Nov: 0, Dec: 0
+            };
+        }
+        if (revenuePerMonth[year].hasOwnProperty(month)) {
+            revenuePerMonth[year][month] += parseFloat(order.total);
+        }
+    });
+    res.locals.revenuePerMonth = JSON.stringify(revenuePerMonth);
+
     res.render('account', { personalMessage: req.flash('personalMessage'), passwordMessage: req.flash('passwordMessage') });
 }
 
