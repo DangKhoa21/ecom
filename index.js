@@ -70,6 +70,9 @@ app.use(passport.session());
 //cau hinh su dung connect-flash
 app.use(flash());
 
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
+
 // middleware to initialize cart
 app.use((req, res, next) => {
     let Cart = require('./controllers/cart');

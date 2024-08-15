@@ -44,6 +44,11 @@
                     <a href="/forgot-password">Forgot Password?</a>
                 </div>
                 <div class="col-6 mx-3">
+                    {{#if registerMessage}}
+                    <div class="col-md-12">
+                        <div class="p-3 mt-3 alert alert-warning">{{{registerMessage}}}</div>
+                    </div>
+                    {{/if}}
                     <form action="/users/register" method="post" id="formRegister">
                         <input type="text" class="w-100 form-control border-0 py-3 mb-4" placeholder="First Name"
                             name="firstName" required>
@@ -62,11 +67,6 @@
                             onkeyup="checkPasswordConfirm('formRegister')">
                         <button class="w-100 btn form-control border-secondary py-3 bg-white text-primary"
                             type="submit">Sign up</button>
-                        {{#if registerMessage}}
-                        <div class="col-md-12">
-                            <div class="p-3 mt-3 alert alert-warning">{{{registerMessage}}}</div>
-                        </div>
-                        {{/if}}
                         <input type="hidden" name="reqUrl" value="{{reqUrl}}">
                     </form>
                 </div>

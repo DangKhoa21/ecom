@@ -22,6 +22,9 @@ router.get('/library', libraryController.show);
 
 router.get('/account', userController.show);
 
+router.put('/personal', userController.updatePersonal);
+router.put('/password', userController.updatePassword);
+
 router.get('/login-sign-up', (req, res) => {
     res.render('login-sign-up');
 });

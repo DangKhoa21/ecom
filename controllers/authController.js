@@ -36,7 +36,7 @@ controller.logout = (req, res) => {
     req.logout(error => {
         if (error) return next(error);
         req.session.cart = cart;
-        res.redirect('/');
+        res.redirect('/users/login-sign-up');
     });
 }
 

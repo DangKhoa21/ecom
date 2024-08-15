@@ -3,6 +3,7 @@
 const controller = {};
 const models = require('../models');
 const sequelize = require('sequelize');
+const bcrypt = require('bcrypt');
 
 controller.checkout = (req, res) => {
     if (req.session.cart.quantity > 0) {
@@ -77,7 +78,7 @@ controller.show = async (req, res) => {
     let orders = await models.Order.findAll({
         where: { userId },
         order: [['updatedAt', 'DESC']],
-        attributes: ['id', 'quantity', 'total', 'subtotal', 'discount', 'paymentMethod', 'status', 
+        attributes: ['id', 'quantity', 'total', 'subtotal', 'discount', 'paymentMethod', 'status', 'updatedAt',
             [sequelize.literal(`to_char("Order"."updatedAt", 'Mon DD, YYYY HH24:MI')`), 'formattedUpdatedAt']],
         include: [{ 
             model: models.Product,
@@ -90,10 +91,45 @@ controller.show = async (req, res) => {
             order.formattedUpdatedAt = order.dataValues.formattedUpdatedAt;
         });
     }
-
     res.locals.orders = orders;
 
-    res.render('account');
+    res.render('account', { personalMessage: req.flash('personalMessage'), passwordMessage: req.flash('passwordMessage') });
+}
+
+controller.updatePersonal = async (req, res) => {
+    let userId = req.user.id;
+    const { firstName, lastName, email, mobile } = req.body;
+    const [rows] = await models.User.update({ firstName, lastName, email, mobile }, { where: { id: userId } });
+    if (rows > 0)
+        req.flash('personalMessage', 'Profile updated successfully!');
+    else
+        req.flash('personalMessage', 'Profile update failed!');
+    res.redirect('/users/account');
+}
+
+controller.updatePassword = async (req, res) => {
+    let userId = req.user.id;
+    const { currentPassword, password, confirmPassword } = req.body;
+
+    const user = await models.User.findOne({ where: { id: userId } });
+    if (!bcrypt.compareSync(currentPassword, user.password)) {
+        req.flash('passwordMessage', 'Current password is incorrect!');
+        return res.redirect('/users/account');
+    }
+    if (password !== confirmPassword) {
+        req.flash('passwordMessage', 'Password and Confirm Password does not match!');
+        return res.redirect('/users/account');
+    }
+
+    const [rows] = await models.User.update({ 
+        password: bcrypt.hashSync(password, bcrypt.genSaltSync(8)) }, 
+        { where: { id: userId } 
+    });
+    if (rows > 0)
+        req.flash('passwordMessage', 'Password updated successfully!');
+    else
+        req.flash('passwordMessage', 'Password update failed!');
+    res.redirect('/users/account');
 }
 
 module.exports = controller
