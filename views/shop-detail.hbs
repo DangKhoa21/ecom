@@ -109,6 +109,7 @@
                         </div>
                     </div>
                     {{#if ../isLoggedIn}}
+                    {{#if ../isPurchased}}
                     <form action="/users/{{id}}/review" method="post">
                         <h4 class="mb-4 fw-bold">Leave a Review</h4>
                         <div class="row g-4">
@@ -137,6 +138,10 @@
                             </div>
                         </div>
                     </form>
+                    {{else}}
+                    <h4 class="mb-2 fw-bold">Leave a Review</h4>
+                    <p>Buy this product to leave a review</p>
+                    {{/if}}
                     {{else}}
                     <h4 class="mb-2 fw-bold">Leave a Review</h4>
                     <p>Share your thoughts with other customers</p>

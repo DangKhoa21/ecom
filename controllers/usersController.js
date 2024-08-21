@@ -61,6 +61,12 @@ controller.addReview = async (req, res) => {
         else
             await models.Review.create({ userId, productId, review, stars });
 
+        let productReview = await models.Review.findAll({ where: { productId } });
+        let avgStars = productReview.reduce((total, item) => {
+            return total + item.stars;
+        }, 0) / productReview.length;
+        await product.update({ stars: avgStars.toFixed(1) });
+
         res.redirect(`/shop/${productId}`);
     }
     else
