@@ -13,7 +13,7 @@
                 <div class="d-flex flex-column ">
                     <p class="mb-3">{{summary}}</p>
                 </div>
-                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                <a href="/users/download/{{ id }}" class="btn border border-secondary rounded-pill px-3 text-primary">
                     <i class="fa fa-download me-2 text-primary"></i> Download
                 </a>
                 {{else}}
@@ -23,8 +23,8 @@
                     <h5 class="mb-3 text-decoration-line-through text-muted">{{oldPrice}} $</h4>
                 </div>
                 {{#if isPurchased}}
-                <a class="btn border rounded-pill px-3 text-muted"><i
-                        class="fa fa-check me-2 text-muted"></i> Purchased</a>
+                <a class="btn border rounded-pill px-3 text-muted"><i class="fa fa-check me-2 text-muted"></i>
+                    Purchased</a>
                 {{else}}
                 <a onclick="addCart({{ id }}, 1)" class="btn border border-secondary rounded-pill px-3 text-primary">
                     <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart

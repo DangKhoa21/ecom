@@ -6,6 +6,7 @@ const userController = require('../controllers/usersController');
 const wishlistController = require('../controllers/wishlistController');
 const authController = require('../controllers/authController');
 const libraryController = require('../controllers/libraryController');
+const downloadController = require('../controllers/downloadController');
 
 router.use(authController.isLoggedIn);
 
@@ -19,6 +20,8 @@ router.post('/wishlist', wishlistController.add);
 router.delete('/wishlist', wishlistController.remove);
 
 router.get('/library', libraryController.show);
+
+router.get('/download/:gameID', downloadController.download);
 
 router.get('/account', userController.show);
 
