@@ -42,7 +42,6 @@ controller.getData = async (req, res, next) => {
         limit: 3,
     });
     res.locals.featuredProducts = featuredProducts;
-
     next();
 }
 
@@ -108,7 +107,7 @@ controller.show = async (req, res) => {
         totalRows: count,
         queryParams: req.query
     }
-    
+
     const userId = req.user ? req.user.id : null;
     const purchasedProductIds = await getPurchasedProductIds(userId);
     rows = rows.map(product => {
@@ -135,8 +134,8 @@ controller.showDetails = async (req, res) => {
             model: models.Image,
             attributes: ['name', 'imagePath']
         }, {
-            model: models.Review,            
-            attributes: ['id', 'review', 'stars', 
+            model: models.Review,
+            attributes: ['id', 'review', 'stars',
                 [sequelize.literal(`to_char("Reviews"."updatedAt", 'Mon DD, YYYY HH24:MI')`), 'formattedUpdatedAt']],
             include: [{
                 model: models.User,
@@ -155,48 +154,27 @@ controller.showDetails = async (req, res) => {
 
     if (product.Reviews) {
         product.Reviews.forEach(review => {
-          review.formattedUpdatedAt = review.dataValues.formattedUpdatedAt;
+            review.formattedUpdatedAt = review.dataValues.formattedUpdatedAt;
         });
     }
 
     res.locals.product = product;
 
-    let tagIds = [];
-    product.Tags.forEach(tag => tagIds.push(tag.id));
-    let relatedProducts = await models.Product.findAll({
-        attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
-        include: [{
-            model: models.Tag,
-            attributes: ['id'],
-            where: {
-                id: { [Op.in]: tagIds }
-            }
-        }],
-        limit: 8
-    });
+    // Expand related products with a recommendation system
+    res.locals.relatedProducts = await generateRecommendations(product, req.user);
 
-    const userId = req.user ? req.user.id : null;
-    const purchasedProductIds = await getPurchasedProductIds(userId);
-    relatedProducts = relatedProducts.map(product => {
-        return {
-            ...product.dataValues,
-            isPurchased: purchasedProductIds.includes(product.id)
-        }
-    });
-    res.locals.relatedProducts = relatedProducts;
-
-    if (purchasedProductIds.includes(product.id)) {
+    if (req.user && (await getPurchasedProductIds(req.user.id)).includes(product.id)) {
         res.locals.isPurchased = true;
     }
 
     res.render('shop-detail');
 }
-
 function removeParam(key, sourceURL) {
     var rtn = sourceURL.split("?")[0],
         param,
         params_arr = [],
         queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
+
     if (queryString !== "") {
         params_arr = queryString.split("&");
         for (var i = params_arr.length - 1; i >= 0; i -= 1) {
@@ -210,12 +188,58 @@ function removeParam(key, sourceURL) {
     return rtn;
 }
 
+async function generateRecommendations(product, user) {
+    const Product = models.Product;
+    const Tag = models.Tag;
+    let recommendations = [];
+
+    // Include related products by tags
+    let tagIds = product.Tags.map(tag => tag.id);
+    let relatedByTags = await Product.findAll({
+        attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
+        include: [{
+            model: Tag,
+            where: { id: { [Op.in]: tagIds } },
+            attributes: []
+        }],
+        limit: 4,
+        where: {
+            id: { [Op.ne]: product.id }  // Exclude the current product
+        }
+    });
+    recommendations = recommendations.concat(relatedByTags);
+
+    // Include other recommendations based on user behavior
+    if (user) {
+        let purchasedProductIds = await getPurchasedProductIds(user.id);
+        let recommendedByUser = await Product.findAll({
+            attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
+            where: {
+                id: { [Op.in]: purchasedProductIds },
+                id: { [Op.ne]: product.id }
+            },
+            limit: 4
+        });
+        recommendations = recommendations.concat(recommendedByUser);
+    }
+
+    // Avoid duplicate recommendations
+    const uniqueRecommendations = recommendations.reduce((acc, curr) => {
+        if (!acc.find(prod => prod.id === curr.id)) {
+            acc.push(curr);
+        }
+        return acc;
+    }, []);
+
+    return uniqueRecommendations;
+}
+
 async function getPurchasedProductIds(userId) {
     let productIdList = [];
     if (userId) {
         let orders = await models.Order.findAll({
             where: { userId },
-            include: [{ 
+            include: [{
                 model: models.Product,
                 attributes: ['id']
             }]
