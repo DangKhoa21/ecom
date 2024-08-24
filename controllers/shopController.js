@@ -4,6 +4,8 @@ let controller = {};
 const models = require('../models');
 const sequelize = require('sequelize');
 const Op = sequelize.Op;
+const collaborativeFilter = require('../lib/cf_api').cFilter; // Import collaborative filter function
+const databases = require('./cfdatabase');
 
 controller.getData = async (req, res, next) => {
     const Product = models.Product;
@@ -13,25 +15,19 @@ controller.getData = async (req, res, next) => {
 
     // Get Category data
     const categories = await Category.findAll({
-        include: [{
-            model: Product
-        }]
+        include: [{ model: Product }]
     });
     res.locals.categories = categories;
 
     // Get Brand data
     const brands = await Brand.findAll({
-        include: [{
-            model: Product
-        }]
+        include: [{ model: Product }]
     });
     res.locals.brands = brands;
 
     // Get Tag data
     const tags = await Tag.findAll({
-        include: [{
-            model: Product
-        }]
+        include: [{ model: Product }]
     });
     res.locals.tags = tags;
 
@@ -169,6 +165,7 @@ controller.showDetails = async (req, res) => {
 
     res.render('shop-detail');
 }
+
 function removeParam(key, sourceURL) {
     var rtn = sourceURL.split("?")[0],
         param,
@@ -211,11 +208,14 @@ async function generateRecommendations(product, user) {
 
     // Include other recommendations based on user behavior
     if (user) {
-        let purchasedProductIds = await getPurchasedProductIds(user.id);
-        let recommendedByUser = await Product.findAll({
+        const ratings = await getUserRatingsMatrix(user.id); // Assume this function fetches the user ratings matrix
+        const userIndex = user.id; // Or whatever identifier you use
+        const userRecommendations = collaborativeFilter(ratings, userIndex);
+
+        const recommendedByUser = await Product.findAll({
             attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
             where: {
-                id: { [Op.in]: purchasedProductIds },
+                id: { [Op.in]: userRecommendations },
                 id: { [Op.ne]: product.id }
             },
             limit: 4
@@ -250,6 +250,21 @@ async function getPurchasedProductIds(userId) {
         });
     }
     return productIdList;
+}
+
+// Placeholder for fetching user ratings matrix
+async function getUserRatingsMatrix(userId) {
+    // Simulating asynchronous fetching of ratings data from the database
+    // Assuming `databases.simple` or `databases.notSimple` holds the ratings matrix data
+
+    // Fetch the appropriate matrix based on userId or some logic
+    const matrix = databases.simple; // or databases.notSimple based on your requirements
+
+    // Transform the matrix into the format required by the collaborative filter
+    // Example format: { userId: { itemId: rating, ... }, ... }
+    const userRatings = matrix[userId] || {};
+
+    return userRatings;
 }
 
 module.exports = controller;
