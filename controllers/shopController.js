@@ -252,19 +252,22 @@ async function getPurchasedProductIds(userId) {
     return productIdList;
 }
 
-// Placeholder for fetching user ratings matrix
+// Fetch user ratings matrix based on "stars" from the Review model
 async function getUserRatingsMatrix(userId) {
-    // Simulating asynchronous fetching of ratings data from the database
-    // Assuming `databases.simple` or `databases.notSimple` holds the ratings matrix data
+    const reviews = await models.Review.findAll({
+        where: { userId },
+        attributes: ['productId', 'stars']
+    });
 
-    // Fetch the appropriate matrix based on userId or some logic
-    const matrix = databases.simple; // or databases.notSimple based on your requirements
+    // Transform the reviews into a ratings matrix format
+    let ratingsMatrix = {};
+    reviews.forEach(review => {
+        const productId = review.productId;
+        const rating = review.stars;
+        ratingsMatrix[productId] = rating;
+    });
 
-    // Transform the matrix into the format required by the collaborative filter
-    // Example format: { userId: { itemId: rating, ... }, ... }
-    const userRatings = matrix[userId] || {};
-
-    return userRatings;
+    return ratingsMatrix;
 }
 
 module.exports = controller;
