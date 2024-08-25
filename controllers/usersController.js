@@ -77,7 +77,7 @@ controller.show = async (req, res) => {
     let userId = req.user.id;
     const user = await models.User.findOne({ 
         where: { id: userId },
-        attributes: ['firstName', 'lastName', 'email', 'mobile']
+        attributes: ['firstName', 'lastName', 'email', 'mobile', 'isAdmin']
     });
     res.locals.user = user;
 
@@ -88,7 +88,17 @@ controller.show = async (req, res) => {
             [sequelize.literal(`to_char("Order"."updatedAt", 'Mon DD, YYYY HH24:MI')`), 'formattedUpdatedAt']],
         include: [{ 
             model: models.Product,
-            attributes: ['id', 'name', 'imagePath', 'price']
+            attributes: ['id', 'name', 'imagePath', 'price'],
+            include: [{
+                model: models.Tag,
+                attributes: ['id', 'name']
+            }, {
+                model: models.Category,
+                attributes: ['id', 'name']
+            }, {
+                model: models.Brand,
+                attributes: ['id', 'name']
+            }]
         }]
     });
 
@@ -99,23 +109,53 @@ controller.show = async (req, res) => {
     }
     res.locals.orders = orders;
 
-    const revenuePerMonth = {};
+    const expensePerMonth = {};
+    const orderPerMonth = {};
     orders.forEach(order => {
         const date = new Date(order.updatedAt);
         const year = date.getFullYear();
         const month = date.toLocaleString('default', { month: 'short' });
 
-        if (!revenuePerMonth[year]) {
-            revenuePerMonth[year] = {
+        if (!expensePerMonth[year]) {
+            expensePerMonth[year] = {
                 Jan: 0, Feb: 0, Mar: 0, Apr: 0, May: 0, Jun: 0,
                 Jul: 0, Aug: 0, Sep: 0, Oct: 0, Nov: 0, Dec: 0
             };
         }
-        if (revenuePerMonth[year].hasOwnProperty(month)) {
-            revenuePerMonth[year][month] += parseFloat(order.total);
+        if (!orderPerMonth[year]) {
+            orderPerMonth[year] = {
+                Jan: 0, Feb: 0, Mar: 0, Apr: 0, May: 0, Jun: 0,
+                Jul: 0, Aug: 0, Sep: 0, Oct: 0, Nov: 0, Dec: 0
+            };
+        }
+
+        if (expensePerMonth[year].hasOwnProperty(month)) {
+            expensePerMonth[year][month] += parseFloat(order.total);
+        }
+        if (orderPerMonth[year].hasOwnProperty(month)) {
+            orderPerMonth[year][month] += 1;
         }
     });
-    res.locals.revenuePerMonth = JSON.stringify(revenuePerMonth);
+    res.locals.expensePerMonth = JSON.stringify(expensePerMonth);
+    res.locals.orderPerMonth = JSON.stringify(orderPerMonth);
+
+    const categoriesCount = {};
+    const brandsCount = {};
+    const tagsCount = {};
+
+    orders.forEach(order => {
+        order.Products.forEach(product => {
+            categoriesCount[product.Category.name] = (categoriesCount[product.Category.name] || 0) + 1;
+            brandsCount[product.Brand.name] = (brandsCount[product.Brand.name] || 0) + 1;
+            product.Tags.forEach(tag => {
+                tagsCount[tag.name] = (tagsCount[tag.name] || 0) + 1;
+            });
+        });
+    });
+
+    res.locals.categoriesCount = JSON.stringify(categoriesCount);
+    res.locals.brandsCount = JSON.stringify(brandsCount);
+    res.locals.tagsCount = JSON.stringify(tagsCount);
 
     res.render('account', { personalMessage: req.flash('personalMessage'), passwordMessage: req.flash('passwordMessage') });
 }
