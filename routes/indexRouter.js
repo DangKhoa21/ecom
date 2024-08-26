@@ -19,5 +19,8 @@ router.get('/admin', authController.isLoggedIn, adminController.show);
 
 router.get('/:page', controller.showPage);
 
+router.post('/contact', controller.submitContactForm);
+router.post('/subscribe', controller.submitSubscribeForm);
+
 
 module.exports = router;

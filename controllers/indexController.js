@@ -89,4 +89,19 @@ async function checkForPurchasedProducts(products, userId) {
     return products;
 }
 
+controller.submitContactForm = async (req, res) => {
+    const { name, email, subject, message } = req.body;
+    let result = await models.Message.create({ name, email, subject, message });
+    if (result)
+        return res.render('contact', { result: 'Your message has been sent!' });
+    else
+        return res.render('contact', { result: 'Your message has not been sent!' });
+}
+
+controller.submitSubscribeForm = async (req, res) => {
+    const { email } = req.body;
+    await models.Subscribe.create({ email });
+    res.redirect('/');
+}
+
 module.exports = controller;
