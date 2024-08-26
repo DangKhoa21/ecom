@@ -206,22 +206,22 @@ async function generateRecommendations(product, user) {
     });
     recommendations = recommendations.concat(relatedByTags);
 
-    // Include other recommendations based on user behavior
-    if (user) {
-        const ratings = await getUserRatingsMatrix(user.id); // Assume this function fetches the user ratings matrix
-        const userIndex = user.id; // Or whatever identifier you use
-        const userRecommendations = collaborativeFilter(ratings, userIndex);
+    // // Include other recommendations based on user behavior
+    // if (user) {
+    //     const ratings = await getUserRatingsMatrix(user.id); // Assume this function fetches the user ratings matrix
+    //     const userIndex = user.id; // Or whatever identifier you use
+    //     const userRecommendations = collaborativeFilter(ratings, userIndex);
 
-        const recommendedByUser = await Product.findAll({
-            attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
-            where: {
-                id: { [Op.in]: userRecommendations },
-                id: { [Op.ne]: product.id }
-            },
-            limit: 4
-        });
-        recommendations = recommendations.concat(recommendedByUser);
-    }
+    //     const recommendedByUser = await Product.findAll({
+    //         attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
+    //         where: {
+    //             id: { [Op.in]: userRecommendations },
+    //             id: { [Op.ne]: product.id }
+    //         },
+    //         limit: 4
+    //     });
+    //     recommendations = recommendations.concat(recommendedByUser);
+    // }
 
     // Avoid duplicate recommendations
     const uniqueRecommendations = recommendations.reduce((acc, curr) => {
