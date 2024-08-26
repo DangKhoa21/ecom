@@ -1,15 +1,15 @@
 <!-- Single Page Header start -->
 <div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6">My Account</h1>
+    <h1 class="text-center text-white display-6">Admin</h1>
     <ol class="breadcrumb justify-content-center mb-0">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
         <li class="breadcrumb-item"><a href="#">Pages</a></li>
-        <li class="breadcrumb-item active text-white">My Account</li>
+        <li class="breadcrumb-item active text-white">Admin</li>
     </ol>
 </div>
 <!-- Single Page Header End -->
 
-<!-- My Account Start -->
+<!-- Admin Start -->
 <div class="my-account">
     <div class="container-fluid py-5">
         <div class="container py-5" style="max-width: 1140px;">
@@ -19,18 +19,7 @@
                         style="align-items: flex-start;">
                         <a class="nav-link active" id="dashboard-nav" data-toggle="pill" href="#dashboard-tab" role="tab">Dashboard</a>
                         <a class="nav-link" id="orders-nav" data-toggle="pill" href="#orders-tab" role="tab">Orders</a>
-                        <a class="nav-link" id="personal-details-nav" data-toggle="pill"
-                            href="#personal-details-tab" role="tab">Personal Details</a>
-                        <a class="nav-link" id="account-nav" data-toggle="pill" href="#account-tab" role="tab">Account
-                            Details</a>
-                        <a class="nav-link" id="payment-nav" data-toggle="pill" href="#payment-tab" role="tab">Payment
-                            Method</a>
                     </div>
-                    {{#if user.isAdmin}}
-                    <div class="mt-4">
-                        <a class="btn btn-link bg- border-secondary p-3" id="admin-nav" href="/admin">Move to Admin</a>
-                    </div>
-                    {{/if}}
                 </div>
                 <div class="col-md-9">
                     <div class="tab-content">
@@ -43,7 +32,7 @@
                                     <div class="bg-primary rounded p-3 py-2">
                                         <p class="fs-2 mb-0 text-white" id="totalExpenses">0.00$</p>
                                         <p class="fs-6 mb-0 text-success" id="expenseChangeRate">0.00% <i class="fas fa-arrow-up"></i></p>
-                                        <p class="text-light mb-2">Total Expenses</p>
+                                        <p class="text-light mb-2">Total Revenue</p>
                                     </div>
                                     <div class="bg-primary rounded p-3 py-2 mt-3">
                                         <p class="fs-2 mb-0 text-white" id="totalOrders">0</p>
@@ -70,6 +59,47 @@
                                     <canvas id="tagsChart"></canvas>
                                 </div>
                             </div>
+                            <div class="mt-4 row">
+                                <div class="col-md-6">
+                                    <h4 class="mt-4">Top Users</h4>
+                                    <div>
+                                        <canvas id="topUsersChart"></canvas>
+                                    </div>
+                                    <div class="bg-primary rounded p-3 py-2 mt-3">
+                                        <p class="fs-2 mb-0 text-white">{{totalUsers}}</p>
+                                        <p class="text-light mb-2">Current Users</p>
+                                    </div>
+                                    <div class="bg-primary rounded p-3 py-2 mt-3">
+                                        <p class="fs-2 mb-0 text-white">{{totalProducts}}</p>
+                                        <p class="text-light mb-2">Current Products</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4 class="mt-4">Top Products</h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Image</th>
+                                                    <th>Name</th>
+                                                    <th>Stars</th>
+                                                    <th>Sold</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="topProductsTableBody">
+                                                {{#each topProducts}}
+                                                <tr>
+                                                    <td><a href="/shop/{{ id }}"><img src="{{imagePath}}" alt="{{name}}" class="img-fluid" style="height:50px;"></a></td>
+                                                    <td><a href="/shop/{{ id }}">{{name}}</a></td>
+                                                    <td>{{stars}}</td>
+                                                    <td>{{count}}</td>
+                                                </tr>
+                                                {{/each}}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- Dashboard Section End -->
 
@@ -85,6 +115,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Date</th>
+                                            <th>UserID</th>
                                             <th>Method</th>
                                             <th>Status</th>
                                             <th>Quantity</th>
@@ -97,6 +128,7 @@
                                         <tr class="order-row" data-order-id="{{@index}}">
                                             <td><p class="fw-bold mb-0">{{increment @index}}</p></td>
                                             <td>{{formattedUpdatedAt}}</td>
+                                            <td>{{User.id}}</td>
                                             <td>{{paymentMethod}}</td>
                                             <td>{{status}}</td>
                                             <td>{{quantity}}</td>
@@ -104,7 +136,7 @@
                                             <td><button class="btn btn-primary border-secondary text-white" onclick="toggleDetails({{@index}})">View</button></td>
                                         </tr>
                                         <tr id="details-{{@index}}" class="order-details" style="display:none;">
-                                            <td colspan="7">
+                                            <td colspan="8">
                                                 <div class="table-responsive">
                                                     <table class="table table-bordered">
                                                         <thead class="thead-dark">
@@ -145,107 +177,6 @@
                             </div>
                         </div>
                         <!-- Orders Section End -->
-
-                        <!-- Personal Details Section Start -->
-                        <div class="tab-pane fade" id="personal-details-tab" role="tabpanel"
-                            aria-labelledby="personal-details-nav">
-                            <h3>Personal Details</h3>
-                            {{#if personalMessage}}
-                            <div class="col-md-12">
-                                <div class="mt-3 mb-0 py-2 px-3 alert alert-warning">{{{personalMessage}}}</div>
-                            </div>
-                            {{/if}}
-                            {{#with user}}
-                            <form action="/users/personal?_method=PUT" method="POST" class="row g-4 mt-1">
-                                <div class="col-md-6">
-                                    <label for="first-name" class="form-label h5">First Name</label>
-                                    <input type="text" class="form-control" id="first-name" name="firstName"
-                                        value="{{firstName}}" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="last-name" class="form-label h5">Last Name</label>
-                                    <input type="text" class="form-control" id="last-name" name="lastName"
-                                        value="{{lastName}}" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="mobile" class="form-label h5">Mobile</label>
-                                    <input type="text" class="form-control" id="mobile" name="mobile" value="{{mobile}}"
-                                        required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="email" class="form-label h5">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email" value="{{email}}"
-                                        readonly>
-                                </div>
-                                <div class="col-md-12">
-                                    <button type="submit"
-                                    class="btn border-secondary py-3 px-4 text-uppercase text-primary">Update</button>
-                                </div>
-                            </form>
-                            {{/with}}
-                        </div>
-                        <!-- Personal Details Section End -->
-
-                        <!-- Account Details Section Start -->
-                        <div class="tab-pane fade" id="account-tab" role="tabpanel" aria-labelledby="account-nav">
-                            <h3>Account Details</h3>
-                            {{#if passwordMessage}}
-                            <div class="col-md-12">
-                                <div class="mt-3 mb-0 py-2 px-3 alert alert-warning">{{{passwordMessage}}}</div>
-                            </div>
-                            {{/if}}
-                            <form action="/users/password?_method=PUT" method="POST" class="row g-4 mt-1" id="formChangePassword">
-                                <div class="col-md-12">
-                                    <label for="current-password" class="form-label h5">Current Password</label>
-                                    <input type="password" class="form-control" id="current-password" name="currentPassword"
-                                        required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="new-password" class="form-label h5">New Password</label>
-                                    <input type="password" class="form-control" id="password" name="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                    title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
-                                    onchange="checkPasswordConfirm('formChangePassword')">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="confirm-password" class="form-label h5">Confirm Password</label>
-                                    <input type="password" class="form-control" id="confirm-password"
-                                        name="confirmPassword" required onkeyup="checkPasswordConfirm('formChangePassword')">
-                                </div>
-                                <div class="col-md-12">
-                                    <button type="submit"
-                                    class="btn border-secondary py-3 px-4 text-uppercase text-primary">Save</button>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- Account Details Section End -->
-
-                        <!-- Payment Method Section Start -->
-                        <div class="tab-pane fade" id="payment-tab" role="tabpanel" aria-labelledby="payment-nav">
-                            <h3>Payment Method</h3>
-                            <form action="/update-payment" method="POST" class="row g-4 mt-1">
-                                <div class="col-md-12">
-                                    <label for="card-number" class="form-label h5">Card Number</label>
-                                    <input type="text" class="form-control" id="card-number" name="card-number"
-                                        value="{{cardNumber}}" required>
-                                </div>
-                                <div class="col-md-12">
-                                    <label for="card-expiry" class="form-label h5">Expiry Date</label>
-                                    <input type="text" class="form-control" id="card-expiry" name="card-expiry"
-                                        value="{{cardExpiry}}" required>
-                                </div>
-                                <div class="col-md-12">
-                                    <label for="card-cvv" class="form-label h5">CVV</label>
-                                    <input type="text" class="form-control" id="card-cvv" name="card-cvv"
-                                        value="{{cardCVV}}" required>
-                                </div>
-                                <div class="col-md-12">
-                                    <button type="submit"
-                                    class="btn border-secondary py-3 px-4 text-uppercase text-primary">Save</button>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- Payment Method Section End -->
-
                     </div>
                 </div>
             </div>
@@ -441,5 +372,53 @@ const tagsLabels = Object.keys(tagsCount);
 createPieChart(ctxCategories, categoriesData, categoriesLabels, 'Categories');
 createPieChart(ctxBrands, brandsData, brandsLabels, 'Brands');
 createPieChart(ctxTags, tagsData, tagsLabels, 'Tags');
+
+const ctxUsers = document.getElementById('topUsersChart').getContext('2d');
+const topUsers = JSON.parse('{{{topUsers}}}');
+
+const usersLabels = Object.keys(topUsers).sort((a, b) => b.total - a.total).slice(0, 5);
+const userTotalData = usersLabels.map(user => topUsers[user].total.toFixed(2));
+const userCountData = usersLabels.map(user => topUsers[user].count);
+
+new Chart(ctxUsers, {
+    type: 'bar',
+    data: {
+        labels: usersLabels,
+        datasets: [{
+            label: 'Total Amount Spent',
+            data: userTotalData,
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+            yAxisID: 'y-axis-total'
+        }, {
+            label: 'Number of Orders',
+            data: userCountData,
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1,
+            yAxisID: 'y-axis-count'
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            'y-axis-total': {
+                type: 'linear',
+                position: 'left',
+                beginAtZero: true
+            },
+            'y-axis-count': {
+                type: 'linear',
+                position: 'right',
+                beginAtZero: true,
+                grid: {
+                    drawOnChartArea: false
+                }
+            }
+        }
+    }
+});
 
 </script>
