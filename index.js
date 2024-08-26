@@ -16,7 +16,8 @@ const { createOrder } = require('./controllers/paypal');
 
 
 const redisClient = createClient({
-    url: process.env.REDIS_URL
+    url: process.env.REDIS_URL,
+    pingInterval: 1000,
 });
 redisClient.connect().catch(console.error);
 
