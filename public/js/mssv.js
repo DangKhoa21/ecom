@@ -90,8 +90,8 @@ async function clearCart() {
     }
 }
 
-function addWishlist(id) {
-    fetch('/users/wishlist', {
+async function addWishlist(id) {
+    let res = await fetch('/users/wishlist', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -99,6 +99,24 @@ function addWishlist(id) {
         },
         body: JSON.stringify({ id })
     });
+
+    if (res.status == 200) {
+        let json = await res.json();
+        document.getElementById('cart-quantity').innerText = `${json.quantity}`;
+        if (json.quantity > 0) {
+            document.getElementById('subtotal').innerText = `$${json.subtotal}`;
+            document.getElementById('total').innerText = `$${json.total}`;
+            document.getElementById(`product${id}`).remove();
+        }
+        else {
+            document.getElementById('subtotal').innerText = `$0.00`;
+            document.getElementById('total').innerText = `$0.00`;
+            document.querySelector('.cart-info').innerHTML =
+                `<div class="text-center border py-3 rounded align-content-center">
+            <h3>Your cart is empty!</h3>
+            </div>`;
+        }
+    }
 }
 
 async function removeWishlist(id) {

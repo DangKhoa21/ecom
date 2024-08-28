@@ -13,6 +13,12 @@ controller.add = async (req, res) => {
         if (!wishlists) {
             await models.Wishlist.create({ userId, productId });
         }
+        req.session.cart.remove(productId);
+        return res.json({
+            quantity: req.session.cart.quantity,
+            subtotal: req.session.cart.subtotal,
+            total: req.session.cart.total
+        });
     }
 }
 
