@@ -166,10 +166,20 @@
                 </div>
             </div>
         </div>
-        <h1 class="fw-bold mb-0">You may also like</h1>
+        <h1 class="fw-bold mb-0">Similar Products</h1>
         <div class="vesitable">
             <div class="owl-carousel vegetable-carousel justify-content-center">
                 {{#each relatedProducts}}
+                <div style="height: 500px">
+                    {{> recentProduct}}
+                </div>
+                {{/each}}
+            </div>
+        </div>
+        <h1 class="fw-bold mt-3 mb-0">You may also like</h1>
+        <div class="vesitable">
+            <div class="owl-carousel vegetable-carousel justify-content-center">
+                {{#each recommendedProducts}}
                 <div style="height: 500px">
                     {{> recentProduct}}
                 </div>

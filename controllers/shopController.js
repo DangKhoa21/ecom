@@ -4,8 +4,6 @@ let controller = {};
 const models = require('../models');
 const sequelize = require('sequelize');
 const Op = sequelize.Op;
-const collaborativeFilter = require('../lib/cf_api').cFilter; // Import collaborative filter function
-const databases = require('./cfdatabase');
 
 controller.getData = async (req, res, next) => {
     const Product = models.Product;
@@ -156,12 +154,39 @@ controller.showDetails = async (req, res) => {
 
     res.locals.product = product;
 
-    // Expand related products with a recommendation system
-    res.locals.relatedProducts = await generateRecommendations(product, req.user);
+    let tagIds = [];
+    product.Tags.forEach(tag => tagIds.push(tag.id));
+    let relatedProducts = await models.Product.findAll({
+        attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
+        include: [{
+            model: models.Tag,
+            attributes: ['id'],
+            where: {
+                id: { [Op.in]: tagIds }
+            }
+        }],
+        where: {
+            id: { [Op.ne]: id }
+        },
+        limit: 8
+    });
 
-    if (req.user && (await getPurchasedProductIds(req.user.id)).includes(product.id)) {
+    const userId = req.user ? req.user.id : null;
+    const purchasedProductIds = await getPurchasedProductIds(userId);
+    relatedProducts = relatedProducts.map(product => {
+        return {
+            ...product.dataValues,
+            isPurchased: purchasedProductIds.includes(product.id)
+        }
+    });
+    res.locals.relatedProducts = relatedProducts;
+
+    if (purchasedProductIds.includes(product.id)) {
         res.locals.isPurchased = true;
     }
+
+    // Expand recommended products with a recommendation system
+    res.locals.recommendedProducts = await generateRecommendations(userId);
 
     res.render('shop-detail');
 }
@@ -185,53 +210,111 @@ function removeParam(key, sourceURL) {
     return rtn;
 }
 
-async function generateRecommendations(product, user) {
-    const Product = models.Product;
-    const Tag = models.Tag;
-    let recommendations = [];
+async function generateRecommendations(userId) {
+    if (!userId) {
+        console.log("No user ID provided. Returning empty recommendations.");
+        return [];
+    }
+    
+    console.log("Generating recommendations for user ID:", userId);
 
-    // Include related products by tags
-    let tagIds = product.Tags.map(tag => tag.id);
-    let relatedByTags = await Product.findAll({
-        attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
-        include: [{
-            model: Tag,
-            where: { id: { [Op.in]: tagIds } },
-            attributes: []
-        }],
-        limit: 4,
-        where: {
-            id: { [Op.ne]: product.id }  // Exclude the current product
-        }
+    // Fetch all reviews
+    const reviews = await models.Review.findAll({
+        attributes: ['productId', 'userId', 'stars'],
+        include: [{ model: models.Product, attributes: ['id', 'name'] }]
     });
-    recommendations = recommendations.concat(relatedByTags);
 
-    // Include other recommendations based on user behavior
-    if (user) {
-        const ratings = await getUserRatingsMatrix(user.id); // Assume this function fetches the user ratings matrix
-        const userIndex = user.id; // Or whatever identifier you use
-        const userRecommendations = collaborativeFilter(ratings, userIndex);
+    console.log("Fetched reviews:", reviews.length);
 
-        const recommendedByUser = await Product.findAll({
-            attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary'],
-            where: {
-                id: { [Op.in]: userRecommendations },
-                id: { [Op.ne]: product.id }
-            },
-            limit: 4
-        });
-        recommendations = recommendations.concat(recommendedByUser);
+    // Build the item-item matrix
+    const itemRatings = {};
+    reviews.forEach(review => {
+        if (!itemRatings[review.productId]) {
+            itemRatings[review.productId] = [];
+        }
+        itemRatings[review.productId].push(review.stars);
+    });
+
+    console.log("Item ratings matrix:", itemRatings);
+
+    const itemSimilarity = {};
+    const productIds = Object.keys(itemRatings);
+
+    console.log("Calculating similarities...");
+
+    for (let i = 0; i < productIds.length; i++) {
+        for (let j = i + 1; j < productIds.length; j++) {
+            const idA = productIds[i];
+            const idB = productIds[j];
+            const ratingsA = itemRatings[idA];
+            const ratingsB = itemRatings[idB];
+
+            const similarity = cosineSimilarity(ratingsA, ratingsB);
+
+            if (!itemSimilarity[idA]) itemSimilarity[idA] = {};
+            if (!itemSimilarity[idB]) itemSimilarity[idB] = {};
+            
+            itemSimilarity[idA][idB] = similarity;
+            itemSimilarity[idB][idA] = similarity; // similarity is symmetric
+
+            console.log(`Similarity between item ${idA} and item ${idB}:`, similarity);
+        }
     }
 
-    // Avoid duplicate recommendations
-    const uniqueRecommendations = recommendations.reduce((acc, curr) => {
-        if (!acc.find(prod => prod.id === curr.id)) {
-            acc.push(curr);
-        }
-        return acc;
-    }, []);
+    // Fetch the target product's reviews
+    const purchasedProductIds = await getPurchasedProductIds(userId);
+    console.log("Purchased product IDs:", purchasedProductIds);
 
-    return uniqueRecommendations;
+    // Generate recommendations
+    const recommendedItems = {};
+    purchasedProductIds.forEach(productId => {
+        const similarItems = itemSimilarity[productId];
+        if (similarItems) {
+            console.log(`Similar items for purchased product ${productId}:`, similarItems);
+
+            Object.keys(similarItems).forEach(similarProductId => {
+                if (!purchasedProductIds.includes(parseInt(similarProductId))) {
+                    if (!recommendedItems[similarProductId]) {
+                        recommendedItems[similarProductId] = 0;
+                    }
+                    recommendedItems[similarProductId] += similarItems[similarProductId];
+                }
+            });
+        }
+    });
+
+    console.log("Unsorted recommended items:", recommendedItems);
+
+    // Sort recommended items by similarity score
+    const sortedRecommendations = Object.entries(recommendedItems)
+        .sort(([, scoreA], [, scoreB]) => scoreB - scoreA)
+        .slice(0, 6)
+        .map(([productId]) => parseInt(productId));
+
+    console.log("Sorted recommendations:", sortedRecommendations);
+
+    // Fetch detailed information of recommended products
+    const recommendedProducts = await models.Product.findAll({
+        where: {
+            id: {
+                [Op.in]: sortedRecommendations
+            }
+        },
+        attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice', 'summary']
+    });
+
+    console.log("Recommended products details id:", recommendedProducts.map(product => product.id));
+
+    return recommendedProducts;
+}
+
+
+function cosineSimilarity(vecA, vecB) {
+    let dotProduct = vecA.reduce((sum, val, idx) => sum + val * vecB[idx], 0);
+    let magnitudeA = Math.sqrt(vecA.reduce((sum, val) => sum + val * val, 0));
+    let magnitudeB = Math.sqrt(vecB.reduce((sum, val) => sum + val * val, 0));
+    if (magnitudeA === 0 || magnitudeB === 0) return 0; // Avoid division by zero
+    return dotProduct / (magnitudeA * magnitudeB);
 }
 
 async function getPurchasedProductIds(userId) {
@@ -250,24 +333,6 @@ async function getPurchasedProductIds(userId) {
         });
     }
     return productIdList;
-}
-
-// Fetch user ratings matrix based on "stars" from the Review model
-async function getUserRatingsMatrix(userId) {
-    const reviews = await models.Review.findAll({
-        where: { userId },
-        attributes: ['productId', 'stars']
-    });
-
-    // Transform the reviews into a ratings matrix format
-    let ratingsMatrix = {};
-    reviews.forEach(review => {
-        const productId = review.productId;
-        const rating = review.stars;
-        ratingsMatrix[productId] = rating;
-    });
-
-    return ratingsMatrix;
 }
 
 module.exports = controller;
