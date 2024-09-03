@@ -7,6 +7,17 @@ const sequelize = require('sequelize');
 controller.show = async (req, res) => {
     let userId = req.user.id;
 
+    //cheking user is admin or not
+    const user = await models.User.findOne({
+        attributes: ['id', 'isAdmin'], where: { id: userId } });
+
+    if (!user) {
+        return res.redirect('/');
+    }
+    if (!user.isAdmin) {
+        return res.render('error', { message: 'You are not authorized to access this page.' });
+    }
+
     let orders = await models.Order.findAll({
         order: [['updatedAt', 'DESC']],
         attributes: ['id', 'quantity', 'total', 'subtotal', 'discount', 'paymentMethod', 'status', 'updatedAt',
@@ -124,7 +135,23 @@ controller.show = async (req, res) => {
     const totalProducts = await models.Product.count();
     res.locals.totalProducts = totalProducts;
 
+    const users = await models.User.findAll({
+        attributes: ['id', 'firstName', 'lastName', 'email', 'mobile', 'isAdmin'],
+    });
+    res.locals.users = users;
+
     res.render('admin');
+}
+
+controller.updateOrderStatus = async (req, res) => {
+    const orderId = req.body.orderId;
+    const status = req.body.status;
+
+    const order = await models.Order.findByPk(orderId);
+    order.status = status;
+    await order.save();
+
+    res.status(200).json({ message: 'Order status updated successfully' });
 }
 
 module.exports = controller

@@ -19,6 +19,7 @@
                         style="align-items: flex-start;">
                         <a class="nav-link active" id="dashboard-nav" data-toggle="pill" href="#dashboard-tab" role="tab">Dashboard</a>
                         <a class="nav-link" id="orders-nav" data-toggle="pill" href="#orders-tab" role="tab">Orders</a>
+                        <a class="nav-link" id="users-nav" data-toggle="pill" href="#users-tab" role="tab">Users</a>
                     </div>
                 </div>
                 <div class="col-md-9">
@@ -113,27 +114,30 @@
                                 <table class="table table-bordered">
                                     <thead class="thead-dark">
                                         <tr>
-                                            <th>No</th>
+                                            <th>OrdID</th>
                                             <th>Date</th>
                                             <th>UserID</th>
                                             <th>Method</th>
                                             <th>Status</th>
-                                            <th>Quantity</th>
+                                            <th>Quant</th>
                                             <th>Total</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody id="ordersTableBody">                                        
                                         {{#each orders}}
-                                        <tr class="order-row" data-order-id="{{@index}}">
-                                            <td><p class="fw-bold mb-0">{{increment @index}}</p></td>
+                                        <tr class="order-row" data-order-id="{{id}}">
+                                            <td><p class="fw-bold mb-0">{{id}}</p></td>
                                             <td>{{formattedUpdatedAt}}</td>
                                             <td>{{User.id}}</td>
                                             <td>{{paymentMethod}}</td>
                                             <td>{{status}}</td>
                                             <td>{{quantity}}</td>
                                             <td>${{total}}</td>
-                                            <td><button class="btn btn-primary border-secondary text-white" onclick="toggleDetails({{@index}})">View</button></td>
+                                            <td>
+                                                <button class="btn btn-primary border-secondary text-white" onclick="toggleDetails({{@index}})">View</button>
+                                                <button class="btn btn-primary border-secondary text-white" onclick="updateOrderStatus({{{id}}}, 'PAID')">Done</button>
+                                            </td>
                                         </tr>
                                         <tr id="details-{{@index}}" class="order-details" style="display:none;">
                                             <td colspan="8">
@@ -177,6 +181,43 @@
                             </div>
                         </div>
                         <!-- Orders Section End -->
+
+                        <!-- Users Section Start -->
+                        <div class="tab-pane fade" id="users-tab" role="tabpanel" aria-labelledby="users-nav">
+                            <h3>Users</h3>
+                            <div class="mt-3">
+                                <input type="text" id="" class="form-control" placeholder="Search for a user...">
+                            </div>
+                            <div class="table-responsive mt-4">
+                                <table class="table table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>UserID</th>
+                                            <th>Email</th>
+                                            <th>FName</th>
+                                            <th>LName</th>
+                                            <th>Mobile</th>
+                                            <th>Admin</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="usersTableBody">                                        
+                                        {{#each users}}
+                                        <tr class="order-row" data-user-id="{{@index}}">
+                                            <td><p class="fw-bold mb-0">{{id}}</p></td>
+                                            <td>{{email}}</td>
+                                            <td>{{firstName}}</td>
+                                            <td>{{lastName}}</td>
+                                            <td>{{mobile}}</td>
+                                            <td>{{isAdmin}}</td>
+                                            <td><button class="btn btn-primary border-secondary text-white" onclick="">Authorize</button></td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- Users Section End -->
                     </div>
                 </div>
             </div>

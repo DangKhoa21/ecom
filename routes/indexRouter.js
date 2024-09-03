@@ -16,6 +16,7 @@ const adminController = require('../controllers/adminController');
 router.get('/', controller.showHomepage);
 
 router.get('/admin', authController.isLoggedIn, adminController.show);
+router.patch('/admin/orders', authController.isLoggedIn, adminController.updateOrderStatus);
 
 router.get('/:page', controller.showPage);
 

@@ -157,3 +157,34 @@ function checkPasswordConfirm(formId) {
         confirmPassword.setCustomValidity('');
     }
 }
+
+async function updateOrderStatus(orderId, newStatus) {
+    const row = document.querySelector(`tr[data-order-id="${orderId}"]`);
+    const statusCell = row.querySelector('td:nth-child(5)'); 
+    const currentStatus = statusCell.textContent.trim();
+
+    if (currentStatus === 'UNPAID') {
+        if (confirm('Are you sure you want to mark this order as paid?')) {
+            try {
+                const response = await fetch(`/admin/orders/`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ orderId: orderId, status: newStatus })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to update status');
+                }
+
+                statusCell.textContent = newStatus;
+                alert('Order status updated successfully!');
+
+            } catch (error) {
+                console.error('Error updating order status:', error);
+            }
+        }
+    }
+}

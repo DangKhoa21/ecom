@@ -45,7 +45,7 @@ async function saveOrders(req, res, status) {
         await models.OrderDetail.bulkCreate(orderDetails);
         req.session.cart.clear();
     }
-    return res.render('error', { message: 'Order Placed Successfully!' });
+    return res.render('error', { message: 'Order Placed Successfully!', success: true });
 }
 
 controller.addReview = async (req, res) => {
